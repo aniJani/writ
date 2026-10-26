@@ -1,0 +1,66 @@
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[project]
+name = "writ-kernel"
+version = "0.1.0a1"
+description = "Python binding of the Writ policy kernel for tool-using AI agents"
+readme = "README.md"
+requires-python = ">=3.10"
+license = "Apache-2.0"
+license-files = ["LICENSE"]
+keywords = ["agent", "ai-agent", "policy", "approval", "authorization", "tool-calling", "lean", "webassembly"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3 :: Only",
+    "Typing :: Typed",
+]
+dependencies = ["wasmtime==49.0.0"]
+
+[project.urls]
+Homepage = "https://github.com/aniJani/writ/tree/HEAD/packages/writ-py#readme"
+Repository = "https://github.com/aniJani/writ"
+
+[dependency-groups]
+dev = ["mypy==1.18.2", "pytest==9.1.1", "ruff==0.14.0"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/writ"]
+# writ.wasm is a build product and git-ignored, which hatchling would otherwise leave out.
+artifacts = ["src/writ/wasm/writ.wasm"]
+exclude = ["src/writ/wasm/writ.source"]
+
+[tool.hatch.build.targets.wheel.hooks.custom]
+
+[tool.hatch.build.targets.sdist]
+# The tests read the repository's corpus and fixtures, so they stay out of the sdist.
+include = ["src/writ", "README.md", "LICENSE", "hatch_build.py"]
+artifacts = ["src/writ/wasm/writ.wasm"]
+exclude = ["src/writ/wasm/writ.source"]
+
+[tool.hatch.build.targets.sdist.hooks.custom]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP"]
+# Lengths of these zips differ only when a check fails, and the message then lists the common prefix.
+per-file-ignores = { "scripts/smoke.py" = ["B905"] }
+
+[tool.mypy]
+python_version = "3.10"
+strict = true
+files = ["src", "tests", "examples", "hatch_build.py"]
+mypy_path = "tests"
+
+[[tool.mypy.overrides]]
+# hatchling runs only inside the build backend, so it is not in the dev environment.
+module = ["hatchling.*"]
+ignore_missing_imports = true

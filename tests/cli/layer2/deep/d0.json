@@ -1,0 +1,1 @@
+{ "writ": "0.1", "extends": ["d1.json"], "actions": { "a0": {} } }

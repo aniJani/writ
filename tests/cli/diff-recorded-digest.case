@@ -1,0 +1,2 @@
+args: diff tests/cli/policies/formats-shop.json tests/cli/diff/shop-capped.json tests/cli/diff/shop-events.jsonl
+exit: 1

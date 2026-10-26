@@ -1,0 +1,7 @@
+trace shop/approve-and-dispatch: A purchase waits for the owner's approval, then dispatches.
+  0 session_start -> accepted none
+  1 turn_start -> accepted none
+  2 step_start -> accepted none
+  3 propose call_id=c1 tool=buy -> accepted needs_approval
+  4 approve call_id=c1 approver=laptop -> accepted authorized
+  5 dispatch call_id=c1 -> accepted dispatch_claimed

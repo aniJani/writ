@@ -1,0 +1,2 @@
+args: check tests/cli/policies/coding-agent-1.json
+exit: 0

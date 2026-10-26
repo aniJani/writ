@@ -1,0 +1,8 @@
+{"type":"session_start","seq":1,"time":0,"state_version":0,"session_id":"s1","policy_digest":"sha256:4b85e9777890651abce4a153c779f779daa6d85e1fae986472c0f12928c910b3","requester":"u1","permissions":[],"approvers":{"lead":{"principal":"u2","kind":"human","roles":["dev"]}},"ledger":{}}
+{"type":"turn_start","seq":2,"time":1000,"state_version":1,"user_initiated":true}
+{"type":"step_start","seq":3,"time":1000,"state_version":2}
+{"type":"propose","seq":4,"time":1100,"state_version":3,"call_id":"c1","tool":"repo.read","call_digest":"d-read","guards":{},"escalators":{}}
+{"type":"propose","seq":5,"time":1200,"state_version":4,"call_id":"c2","tool":"repo.push","call_digest":"d-push","guards":{"change_window":false},"escalators":{}}
+{"type":"approve","seq":6,"time":5000,"state_version":5,"call_id":"c2","request_id":{"session":"s1","call":"c2","generation":0},"approver":"lead","reviewed_digest":"d-push"}
+{"type":"dispatch","seq":7,"time":5100,"state_version":6,"call_id":"c1","attempt":1,"call_digest":"d-read","guards":{},"idempotency_key":"k-s1-c1"}
+{"type":"result","seq":8,"time":5200,"state_version":7,"call_id":"c1","outcome":"succeeded"}

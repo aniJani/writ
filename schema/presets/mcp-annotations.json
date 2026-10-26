@@ -1,0 +1,16 @@
+{
+  "$schema": "../writ.policy-0.1.schema.json",
+  "writ": "0.1",
+  "labels": {
+    "read_only": { "order": ["true", "false"] },
+    "destructive": { "order": ["false", "true"] },
+    "idempotent": { "order": ["true", "false"] },
+    "open_world": { "order": ["false", "true"] }
+  },
+  "rules": [
+    { "when": { "read_only": ">=false" }, "require": { "consent": "per_call" } },
+    { "when": { "destructive": ">=true" }, "require": { "consent": "per_call", "grantable": null } },
+    { "when": { "idempotent": ">=false" }, "require": { "idempotent": false, "retry_after_unknown": false } },
+    { "when": { "open_world": ">=true" }, "require": { "flags": ["sends_external"] } }
+  ]
+}

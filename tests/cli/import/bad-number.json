@@ -1,0 +1,1 @@
+[{"name":"a","inputSchema":{"type":"object","properties":{"x":{"type":"number","maximum":1.23456789012345678}}}}]

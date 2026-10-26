@@ -1,0 +1,6 @@
+{"writ":"0.1","approver_roles":["o"],"meters":{"usd":{"currency":"USD"}},
+ "actions":{
+  "empty":{"consent":{"all":[]}},
+  "empty-group":{"consent":{"groups":[{"all":[]}]}},
+  "cost-no-consent":{"consent_if_cost_over":{"amount":"5","currency":"USD"},"meters":["usd"]},
+  "msg":{"messages":{"guard_false":{"model":"m"}}}}}

@@ -1,0 +1,1 @@
+{"ok":false,"errors":[{"code":"extends_cycle","message":"extends forms a cycle: tests/cli/layer2/cycle-a.json -> tests/cli/layer2/cycle-b.json -> tests/cli/layer2/cycle-a.json"}],"warnings":[]}

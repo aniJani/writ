@@ -1,0 +1,7 @@
+{
+  "writ": "0.1",
+  "labels": { "risk": { "order": ["low", "high"] } },
+  "actions": {
+    "files.delete": { "labels": { "risk": "high" }, "consent": { "quorum": 0 }, "meters": ["nope"] }
+  }
+}

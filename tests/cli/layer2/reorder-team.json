@@ -1,0 +1,7 @@
+{
+  "writ": "0.1",
+  "extends": ["undeclared-org.json"],
+  "approver_roles": ["dba"],
+  "labels": { "risk": { "order": ["high", "medium"] } },
+  "actions": {}
+}

@@ -1,0 +1,3 @@
+args: check tests/cli/policies/formats-err-consent.json
+exit: 2
+stderr: actions.a.consent: unknown value, expected "none", "per_call" or an object

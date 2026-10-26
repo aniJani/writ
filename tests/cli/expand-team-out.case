@@ -1,0 +1,3 @@
+args: expand tests/cli/layer2/team.json --out @TMP@/team.json
+exit: 0
+outfile: @TMP@/team.json tests/cli/layer2/team.expanded.json

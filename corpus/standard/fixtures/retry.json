@@ -1,0 +1,8 @@
+{
+  "writ": "0.1",
+  "approver_roles": ["owner"],
+  "actions": {
+    "job.submit": { "idempotent": true, "retry_after_unknown": true, "max_attempts": 2 },
+    "job.poll": { "idempotent": true, "retry_after_unknown": true }
+  }
+}

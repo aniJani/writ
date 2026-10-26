@@ -1,0 +1,4 @@
+web.fetch: the server says readOnlyHint true; read_only left "false" (lower it after review)
+notes.put: the server says destructiveHint false; destructive left "true" (lower it after review)
+notes.put: the server says idempotentHint true; idempotent left "false" (lower it after review)
+notes.put: the server says openWorldHint false; open_world left "true" (lower it after review)

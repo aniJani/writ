@@ -1,0 +1,1 @@
+{"writ":"0.1","actions":{"files.read":{"permission":"fs"},"files.delete":{"permission":"fs","consent":"per_call"}},"approver_roles":["owner"],"limits":{"approval_ttl_ms":60000}}

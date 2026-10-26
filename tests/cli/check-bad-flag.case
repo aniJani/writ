@@ -1,0 +1,3 @@
+args: check tests/cli/policies/simple.json --bogus
+exit: 2
+stderr: error: unknown option --bogus

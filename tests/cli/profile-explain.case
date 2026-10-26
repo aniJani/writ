@@ -1,0 +1,2 @@
+args: explain --profile mcp-tool-approval corpus/examples/mcp-approval.jsonl
+exit: 0

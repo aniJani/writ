@@ -1,0 +1,16 @@
+{"type":"session_start","seq":1,"time":10,"state_version":0,"session_id":"s1","policy_digest":"sha256:2f654b688e7e9b3e39e4ecdc43e704f39694f9801a4827c769d901b7dd69d06d","requester":"u1","permissions":[],"approvers":{},"ledger":{}}
+{"type":"turn_start","seq":2,"time":20,"state_version":1,"user_initiated":true}
+{"type":"step_start","seq":3,"time":30,"state_version":2}
+{"type":"propose","seq":4,"time":40,"state_version":3,"call_id":"c1","tool":"pay","call_digest":"d-c1","cost":{"amount":"2147483648","currency":"USD"},"guards":{},"escalators":{}}
+{"type":"dispatch","seq":5,"time":50,"state_version":4,"call_id":"c1","attempt":1,"call_digest":"d-c1","cost":{"amount":"2147483648","currency":"USD"},"guards":{},"idempotency_key":"k-c1"}
+{"type":"result","seq":6,"time":60,"state_version":5,"call_id":"c1","outcome":"succeeded","actual_cost":"4294967296"}
+{"type":"propose","seq":7,"time":70,"state_version":6,"call_id":"c2","tool":"pay","call_digest":"d-c2","cost":{"amount":"4294967297","currency":"USD"},"guards":{},"escalators":{}}
+{"type":"dispatch","seq":8,"time":80,"state_version":7,"call_id":"c2","attempt":1,"call_digest":"d-c2","cost":{"amount":"4294967297","currency":"USD"},"guards":{},"idempotency_key":"k-c2"}
+{"type":"result","seq":9,"time":90,"state_version":8,"call_id":"c2","outcome":"succeeded"}
+{"type":"propose","seq":10,"time":100,"state_version":9,"call_id":"c3","tool":"mint","call_digest":"d-c3","cost":{"amount":"18446744073709551616","currency":"WEI"},"guards":{},"escalators":{}}
+{"type":"dispatch","seq":11,"time":110,"state_version":10,"call_id":"c3","attempt":1,"call_digest":"d-c3","cost":{"amount":"18446744073709551616","currency":"WEI"},"guards":{},"idempotency_key":"k-c3"}
+{"type":"result","seq":12,"time":120,"state_version":11,"call_id":"c3","outcome":"succeeded","actual_cost":"999999999999999999999999999999999999999999999999999999999999999999999999999999"}
+{"type":"propose","seq":13,"time":130,"state_version":12,"call_id":"c4","tool":"mint","call_digest":"d-c4","cost":{"amount":"999999999999999999999999999999999999999999999999999999999999999999999999999999","currency":"WEI"},"guards":{},"escalators":{}}
+{"type":"dispatch","seq":14,"time":140,"state_version":13,"call_id":"c4","attempt":1,"call_digest":"d-c4","cost":{"amount":"999999999999999999999999999999999999999999999999999999999999999999999999999999","currency":"WEI"},"guards":{},"idempotency_key":"k-c4"}
+{"type":"result","seq":15,"time":150,"state_version":14,"call_id":"c4","outcome":"succeeded","actual_cost":"18446744073709551615"}
+{"type":"propose","seq":16,"time":160,"state_version":15,"call_id":"c5","tool":"pay","call_digest":"d-c5","cost":{"amount":"9007199254740991","currency":"USD"},"guards":{},"escalators":{}}

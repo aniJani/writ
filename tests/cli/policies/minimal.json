@@ -1,0 +1,1 @@
+{ "writ": "0.1", "approver_roles": ["user"], "actions": { "send_email": { "consent": "per_call" } } }

@@ -1,0 +1,3 @@
+cmd: scripts/check-version.sh
+args: --lakefile tests/cli/version/lakefile.toml --lean tests/cli/version/Version.lean --npm tests/cli/version/package.json --lock tests/cli/version/package-lock.json --py tests/cli/version/pyproject.toml --uvlock tests/cli/version/uv.lock --changelog tests/cli/version/CHANGELOG.md 1.2.3-preview.4
+exit: 0

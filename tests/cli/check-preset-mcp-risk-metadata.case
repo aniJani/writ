@@ -1,0 +1,2 @@
+args: check schema/presets/mcp-risk-metadata.json
+exit: 0

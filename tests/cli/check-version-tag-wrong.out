@@ -1,0 +1,9 @@
+FAIL tests/cli/version/lakefile.toml: 1.2.3-preview.4, expected 1.2.3-preview.5
+FAIL tests/cli/version/Version.lean: 1.2.3-preview.4, expected 1.2.3-preview.5
+FAIL tests/cli/version/package.json: 1.2.3-preview.4, expected 1.2.3-preview.5
+FAIL tests/cli/version/package-lock.json: 1.2.3-preview.4, expected 1.2.3-preview.5
+FAIL tests/cli/version/package-lock.json packages[""]: 1.2.3-preview.4, expected 1.2.3-preview.5
+FAIL tests/cli/version/pyproject.toml: 1.2.3a4, expected 1.2.3a5
+FAIL tests/cli/version/uv.lock writ-kernel: 1.2.3a4, expected 1.2.3a5
+FAIL tests/cli/version/CHANGELOG.md: no "## 1.2.3-preview.5" heading
+8 mismatches for version 1.2.3-preview.5

@@ -1,0 +1,8 @@
+{
+  "writ": "0.1",
+  "labels": { "risk": { "order": ["read", "navigate", "device", "spend", "destructive"] } },
+  "actions": {
+    "vm.status": { "labels": { "risk": "read" }, "permission": "vm.read" },
+    "vm.terminate": { "permission": "vm.admin" }
+  }
+}

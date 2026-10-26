@@ -1,0 +1,52 @@
+{
+  "sep": 2848,
+  "spec_url": "https://github.com/mcguinness/modelcontextprotocol/blob/e7fff475323f5f6f930396d7a43df06115fe1e6f/seps/2848-asynchronous-approval-for-tool-calls.md",
+  "sep2643_url": "https://github.com/monmohan/modelcontextprotocol/blob/c74b0c9321e89a904780d1024d895232fbb03820/seps/2643-structured-authorization-denials.md",
+  "statements": [
+    {
+      "n": 1,
+      "text": "requestable denial returns a task without executing",
+      "traces": ["mcp-approval/s1-pending-not-executed", "web-chat/parallel-calls", "web-chat/reload-repeat"],
+      "theorems": ["consent_claim", "consent_claim_fired", "dispatch_claimed_iff"],
+      "host": "on needs_approval, returns CreateTaskResult with status working and does not run the tool; a repeated propose returns the same request id, so the server returns the existing task"
+    },
+    {
+      "n": 2,
+      "text": "approval resumes execution at most once",
+      "traces": ["mcp-approval/s2-approved-once", "langgraph-resume/approval-hours-later", "web-chat/reload-repeat", "device-split/device-never-reports"],
+      "theorems": ["at_most_once", "retry_after_unknown", "profile_unknown_final"],
+      "host": "invokes the tool only on dispatch_claimed, and invokes it once per claim"
+    },
+    {
+      "n": 3,
+      "text": "terminal denial is a `completed` task whose body marks `denied-not-executed`, distinct from an execution error",
+      "traces": ["mcp-approval/s3-denied-not-executed", "web-chat/reject-then-retry", "device-split/device-never-reports"],
+      "theorems": ["terminal_absorbing", "no_reject_before_claim", "rejected_claim", "accepted_iff_reject", "accepted_iff_result", "accepted_iff_outcomeUnknown"],
+      "host": "maps the call status to the disposition (docs/sep-2848.md) and writes it in the result _meta and the CallToolResult body"
+    },
+    {
+      "n": 4,
+      "text": "a changed envelope (tool, arguments, principal, subject/resource) requires new approval",
+      "traces": ["mcp-approval/s4-changed-arguments", "langgraph-resume/edit-restarts-tally", "langgraph-resume/resumed-repeat-edited-digest", "langgraph-resume/argument-swap"],
+      "theorems": ["consent_claim", "approve_fresh", "call_origin", "requester_origin"],
+      "host": "computes call_digest over the tool, the full arguments and the subject or resource, and runs one session per originating principal"
+    },
+    {
+      "n": 5,
+      "text": "a cancelled or expired task cannot later execute",
+      "traces": ["mcp-approval/s5-cancelled-or-expired", "langgraph-resume/approval-hours-later", "coding-agent/kill-stops-everything"],
+      "theorems": ["terminal_absorbing", "accepted_iff_cancel", "approve_fresh_event", "claim_authorized_ttl_event", "kill"],
+      "host": "sends cancel for tasks/cancel and approval_expire when the backend reports expiry, and reports the task cancelled or denied-not-executed"
+    },
+    {
+      "n": 6,
+      "text": "result retrieval does not expose backend artifacts",
+      "excluded": "MCP wire behaviour of the host; the kernel holds no backend material"
+    },
+    {
+      "n": 7,
+      "text": "submission input flows through the task input channel",
+      "excluded": "MCP wire behaviour of the host; submission input travels in tasks/update or an MRTR retry, which the kernel never sees"
+    }
+  ]
+}

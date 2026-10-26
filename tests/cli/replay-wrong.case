@@ -1,0 +1,2 @@
+args: replay tests/cli/traces/wrong.jsonl
+exit: 1

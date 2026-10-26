@@ -1,0 +1,4 @@
+args: import mcp tests/cli/tools/web.json --server web --preset-dir ../../../schema/presets --out @TMP@/web-draft.json
+exit: 0
+outfile: @TMP@/web-draft.json tests/cli/tools/web-draft.json
+stderr: web.fetch: the server says readOnlyHint true; read_only left "false" (lower it after review)

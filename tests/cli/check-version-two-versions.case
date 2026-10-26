@@ -1,0 +1,4 @@
+cmd: scripts/check-version.sh
+args: 1.2.3 1.2.4
+exit: 2
+stderr: usage: scripts/check-version.sh

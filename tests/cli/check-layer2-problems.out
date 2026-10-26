@@ -1,0 +1,7 @@
+error: files.delete: its "risk" label "severe" is not in that dimension's order
+error: rules[0]: when names dimension "reach", which is not declared
+error: rules[1]: a consent clause names role "finance", which is not an approver role
+error: files.delete: a consent clause names role "finance", which is not an approver role
+error: files.list: it uses meter "nope", which is not defined
+warning: some actions can need approval but no approval_ttl_ms is set, so requests never expire
+5 errors, 1 warning

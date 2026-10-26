@@ -1,0 +1,4 @@
+args: import mcp tests/cli/import/keys.json --out @TMP@/keys-draft.json
+exit: 0
+outfile: @TMP@/keys-draft.json tests/cli/import/keys-draft.json
+errfile: tests/cli/import-keys.err

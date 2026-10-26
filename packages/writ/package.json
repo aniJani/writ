@@ -1,0 +1,31 @@
+{
+  "name": "@anijani/writ",
+  "version": "0.1.0-preview.1",
+  "description": "Typed wrapper around the Writ policy kernel compiled to WebAssembly",
+  "keywords": ["agent", "ai-agent", "policy", "approval", "authorization", "tool-calling", "ai-sdk", "lean", "webassembly"],
+  "license": "Apache-2.0",
+  "homepage": "https://github.com/aniJani/writ/tree/HEAD/packages/writ#readme",
+  "repository": { "type": "git", "url": "git+https://github.com/aniJani/writ.git", "directory": "packages/writ" },
+  "type": "module",
+  "sideEffects": false,
+  "engines": { "node": ">=20" },
+  "exports": {
+    ".": { "types": "./dist/src/index.d.ts", "default": "./dist/src/index.js" },
+    "./firestore": { "types": "./dist/src/firestore.d.ts", "default": "./dist/src/firestore.js" },
+    "./simple": { "types": "./dist/src/simple.d.ts", "default": "./dist/src/simple.js" },
+    "./ai-sdk": { "types": "./dist/src/ai-sdk.d.ts", "default": "./dist/src/ai-sdk.js" }
+  },
+  "files": ["dist/src", "wasm/writ.wasm", "wasm/writ.mjs"],
+  "publishConfig": { "access": "public" },
+  "scripts": {
+    "build": "node -e \"require('node:fs').rmSync('dist', { recursive: true, force: true })\" && tsc -p tsconfig.json",
+    "pretest": "node scripts/check-wasm.mjs && npm run build",
+    "test": "node --test dist/test/",
+    "prepack": "node -e \"require('node:fs').copyFileSync('../../LICENSE', 'LICENSE')\"",
+    "prepublishOnly": "node scripts/check-wasm.mjs && npm run build && npm test && ../../scripts/pack-check.sh"
+  },
+  "devDependencies": {
+    "typescript": "5.9.3",
+    "@types/node": "22.20.5"
+  }
+}

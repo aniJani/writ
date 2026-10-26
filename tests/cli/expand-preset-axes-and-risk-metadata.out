@@ -1,0 +1,1 @@
+{"actions":{"doc.edit":{"consent":"per_call","grantable":{"max_uses":3,"scope":"session"}},"repo.delete":{"consent":{"groups":[{"all":[{"quorum":1}]},{"all":[{"quorum":2}]}]}}},"approver_roles":["owner","admin"],"limits":{"approval_ttl_ms":600000},"writ":"0.1"}

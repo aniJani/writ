@@ -1,0 +1,17 @@
+{
+  "tools": [
+    {
+      "name": "keys\u0007",
+      "inputSchema": {
+        "type": "object"
+      },
+      "annotations": {
+        "a\nb": {
+          "c\nd": 0.5
+        },
+        "readOnlyHint": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "ok\tkey": 1
+      }
+    }
+  ]
+}

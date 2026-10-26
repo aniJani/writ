@@ -1,0 +1,4 @@
+args: import mcp tests/cli/import/plain.json --preset-dir ../../../schema/presets --out @TMP@/plain-draft.json
+exit: 0
+outfile: @TMP@/plain-draft.json tests/cli/import/plain-draft.json
+errfile: tests/cli/import-plain.err

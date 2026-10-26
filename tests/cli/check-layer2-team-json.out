@@ -1,0 +1,1 @@
+{"ok":true,"errors":[],"warnings":[{"code":"messages_not_applied","action":"repo.push","message":"messages are checked but not applied in 0.1; the binding applies them"}],"policy_digest":"sha256:4b85e9777890651abce4a153c779f779daa6d85e1fae986472c0f12928c910b3"}

@@ -1,0 +1,2 @@
+args: check tests/cli/tools/web-draft.json --tools tests/cli/tools/web-poisoned.json
+exit: 1

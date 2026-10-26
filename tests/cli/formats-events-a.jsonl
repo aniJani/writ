@@ -1,0 +1,4 @@
+{"type":"session_start","seq":1,"time":0,"state_version":0,"session_id":"s1","policy_digest":"sha256:866cd32f034a15421198ab518d1e23a34f4acfb4ba2fb20884f9af5fca97a6dd","requester":"u1","permissions":["shop.read","shop.buy"],"approvers":{"laptop":{"principal":"u1","kind":"human","roles":["owner"]}},"ledger":{}}
+{"type":"turn_start","seq":2,"time":1000,"state_version":1,"user_initiated":true}
+{"type":"step_start","seq":3,"time":1000,"state_version":2}
+{"type":"propose","seq":4,"time":1100,"state_version":3,"call_id":"c1","tool":"buy","call_digest":"d-buy-lamp","cost":{"amount":"1200","currency":"USD"},"guards":{"card_on_file":true},"escalators":{}}

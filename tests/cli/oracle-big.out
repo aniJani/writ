@@ -1,0 +1,16 @@
+{"verdict":"accepted","state_version":1}
+{"verdict":"accepted","state_version":2}
+{"verdict":"accepted","state_version":3}
+{"verdict":"accepted","state_version":4,"decision":"allowed"}
+{"verdict":"accepted","state_version":5,"decision":"dispatch_claimed"}
+{"verdict":"accepted","state_version":6,"decision":"overrun","meters":["spend"]}
+{"verdict":"accepted","state_version":7,"decision":"allowed"}
+{"verdict":"accepted","state_version":8,"decision":"dispatch_claimed"}
+{"verdict":"accepted","state_version":9}
+{"verdict":"accepted","state_version":10,"decision":"allowed"}
+{"verdict":"accepted","state_version":11,"decision":"dispatch_claimed"}
+{"verdict":"accepted","state_version":12,"decision":"overrun","meters":["wei"]}
+{"verdict":"accepted","state_version":13,"decision":"allowed"}
+{"verdict":"accepted","state_version":14,"decision":"dispatch_claimed"}
+{"verdict":"accepted","state_version":15}
+{"verdict":"accepted","state_version":16,"decision":"denied","reason":"meter_exceeded","retry":"after_user_action","message":"This call would go over a spending or usage limit. Do not retry; ask the user to raise the limit or wait for it to reset."}

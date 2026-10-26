@@ -1,0 +1,3 @@
+args: frobnicate
+exit: 2
+stderr: error: unknown command frobnicate

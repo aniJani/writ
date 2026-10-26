@@ -1,0 +1,1 @@
+{"ok":true,"errors":[],"warnings":[{"code":"zero_ttl","action":"pay","message":"a TTL of 0 expires the call at once"}],"policy_digest":"sha256:9430bb08cca5aec672a8881fdd2f33bfca90d6689bc18b5958cb34c689fc52f2"}

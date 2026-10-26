@@ -1,0 +1,320 @@
+name: Release
+
+# A pushed tag v<version> builds and checks every release asset, then publishes them once the
+# `release` environment's reviewers approve. Run by hand (workflow_dispatch), it builds and checks
+# the same assets and publishes nothing. scripts/release-dryrun.sh rehearses it locally, and both
+# build each asset through scripts/release-build.sh.
+#
+# No job restores a cache, so no file cached by another ref can enter a release.
+
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: Build and check every asset without publishing (a manual run never publishes, so false changes nothing)
+        type: boolean
+        default: true
+
+permissions: {}
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+defaults:
+  run:
+    shell: bash
+
+env:
+  EMSDK_VERSION: 6.0.12
+  # The commit of emsdk's 6.0.12 tag.
+  EMSDK_COMMIT: 35ff8a6d150541276abbc6bae512ca90bcfbe220
+  NODE_VERSION: "24"
+  UV_VERSION: 0.11.16
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+
+      - name: Check the tag is on the default branch
+        if: github.event_name == 'push'
+        env:
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+        run: git merge-base --is-ancestor "$GITHUB_SHA" "origin/$DEFAULT_BRANCH"
+
+      # A tag must match every version file and have its CHANGELOG heading; a manual run releases
+      # nothing, so the heading may wait.
+      - name: Check the version
+        env:
+          EVENT: ${{ github.event_name }}
+          TAG: ${{ github.ref_name }}
+        run: |
+          if [ "$EVENT" = push ]; then
+            scripts/check-version.sh "$TAG"
+          else
+            scripts/check-version.sh --unreleased
+          fi
+
+      # The installer script is pinned to the commit of elan's v4.2.4 release tag, as in ci.yml.
+      - name: Install elan
+        run: |
+          curl -sSfL https://raw.githubusercontent.com/leanprover/elan/227caca133724d5516bee25c2aeb3e609478f2d8/elan-init.sh \
+            | sh -s -- -y --default-toolchain "$(cat lean-toolchain)"
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+
+      - run: lake build
+      - run: scripts/check-proofs.sh
+      - run: scripts/cli-test.sh
+      - run: lake exe writ-fuzz --mutants
+      - run: lake exe writ-fuzz --traces 1000
+      - run: scripts/corpus.sh
+
+  binaries:
+    needs: verify
+    strategy:
+      matrix:
+        include:
+          - runner: ubuntu-24.04
+            target: linux-x64
+          - runner: ubuntu-24.04-arm
+            target: linux-arm64
+          - runner: macos-14
+            target: macos-arm64
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 90
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      # Not leanprover/lean-action: its v1.6.2 installs elan from an unpinned script.
+      - name: Install elan
+        run: |
+          curl -sSfL https://raw.githubusercontent.com/leanprover/elan/227caca133724d5516bee25c2aeb3e609478f2d8/elan-init.sh \
+            | sh -s -- -y --default-toolchain "$(cat lean-toolchain)"
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+
+      - run: lake build writ
+
+      - name: Pack writ-<version>-${{ matrix.target }}.tar.gz
+        env:
+          TARGET: ${{ matrix.target }}
+        run: |
+          scripts/release-build.sh binary dist
+          ls dist/writ-*-"$TARGET".tar.gz
+
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: release-binary-${{ matrix.target }}
+          path: dist/
+          if-no-files-found: error
+
+  wasm:
+    needs: verify
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Install elan
+        run: |
+          curl -sSfL https://raw.githubusercontent.com/leanprover/elan/227caca133724d5516bee25c2aeb3e609478f2d8/elan-init.sh \
+            | sh -s -- -y --default-toolchain "$(cat lean-toolchain)"
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          package-manager-cache: false
+
+      - uses: astral-sh/setup-uv@07a047e608db84b3d8c06cd9a7c7dcc9c355c18e # v10.3.2
+        with:
+          version: ${{ env.UV_VERSION }}
+          enable-cache: false
+
+      # emsdk at a pinned commit installs the Emscripten release that commit names.
+      - name: Install emsdk ${{ env.EMSDK_VERSION }}
+        run: |
+          git clone --quiet --depth 1 --branch "$EMSDK_VERSION" https://github.com/emscripten-core/emsdk.git "$RUNNER_TEMP/emsdk"
+          test "$(git -C "$RUNNER_TEMP/emsdk" rev-parse HEAD)" = "$EMSDK_COMMIT"
+          "$RUNNER_TEMP/emsdk/emsdk" install "$EMSDK_VERSION"
+          "$RUNNER_TEMP/emsdk/emsdk" activate "$EMSDK_VERSION"
+          echo "$RUNNER_TEMP/emsdk/upstream/emscripten" >> "$GITHUB_PATH"
+
+      - run: scripts/build-wasm.sh
+
+      - name: npm suites
+        run: |
+          for d in packages/writ examples/langgraph examples/ai-sdk; do
+            (cd "$d" && npm ci --no-audit --no-fund)
+          done
+          for d in packages/writ examples/langgraph examples/ai-sdk playground; do
+            (cd "$d" && npm test)
+          done
+
+      - run: scripts/py-test.sh
+      - run: scripts/release-build.sh npm dist
+      - run: scripts/release-build.sh python dist
+
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: release-packages
+          path: dist/
+          if-no-files-found: error
+
+  corpus:
+    needs: verify
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Install elan
+        run: |
+          curl -sSfL https://raw.githubusercontent.com/leanprover/elan/227caca133724d5516bee25c2aeb3e609478f2d8/elan-init.sh \
+            | sh -s -- -y --default-toolchain "$(cat lean-toolchain)"
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+
+      - run: scripts/release-build.sh corpus dist
+
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: release-corpus
+          path: dist/
+          if-no-files-found: error
+
+  publish:
+    needs: [verify, binaries, wasm, corpus]
+    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v') && inputs.dry_run != true
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    # The owner configures this environment to require a reviewer's approval, to admit only v* tags,
+    # and to hold the NPM_TOKEN secret; PyPI trusts it as the project's trusted publisher.
+    environment: release
+    permissions:
+      contents: write
+      id-token: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          pattern: release-*
+          path: dist
+          merge-multiple: true
+
+      - name: Check the assets and write SHA256SUMS
+        env:
+          TAG: ${{ github.ref_name }}
+        run: |
+          version=${TAG#v}
+          case "$version" in
+            *-preview.*) pep440=${version%-preview.*}a${version##*-preview.} ;;
+            *) pep440=$version ;;
+          esac
+          want=$(printf '%s\n' "anijani-writ-$version.tgz" "writ-$version-linux-arm64.tar.gz" \
+            "writ-$version-linux-x64.tar.gz" "writ-$version-macos-arm64.tar.gz" "writ-corpus-$version.tar.gz" \
+            "writ_kernel-$pep440-py3-none-any.whl" "writ_kernel-$pep440.tar.gz" | LC_ALL=C sort)
+          got=$(cd dist && find . -type f | sed 's|^\./||' | LC_ALL=C sort)
+          if [ "$want" != "$got" ]; then
+            echo "expected these assets:"; echo "$want"; echo "got:"; echo "$got"
+            exit 1
+          fi
+          scripts/release-build.sh sums dist
+          cat dist/SHA256SUMS
+
+      # The release stays a draft until npm and PyPI have the packages, and every step can run again:
+      # a re-run finds the draft, the npm version and the PyPI files already there and goes on.
+      - name: Create the GitHub release as a draft
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.ref_name }}
+        run: |
+          version=${TAG#v}
+          if gh release view "$TAG" --repo "$GITHUB_REPOSITORY" > /dev/null 2>&1; then
+            mkdir "$RUNNER_TEMP/existing"
+            # gh release download fails on a release with no assets, as a draft cut off mid-upload may be.
+            count=$(gh release view "$TAG" --repo "$GITHUB_REPOSITORY" --json assets -q '.assets | length')
+            if [ "$count" != 0 ]; then
+              gh release download "$TAG" --repo "$GITHUB_REPOSITORY" --dir "$RUNNER_TEMP/existing"
+            fi
+            for f in dist/*; do
+              name=${f#dist/}
+              if [ ! -f "$RUNNER_TEMP/existing/$name" ]; then
+                gh release upload "$TAG" "$f" --repo "$GITHUB_REPOSITORY"
+              elif ! cmp -s "$f" "$RUNNER_TEMP/existing/$name"; then
+                echo "release $TAG already holds a different $name: use Re-run failed jobs, which reuses the built assets; delete the draft only if nothing was published from it"
+                exit 1
+              fi
+            done
+            echo "release $TAG exists with these assets"
+          else
+            awk -v h="## $version" '$0 == h || index($0, h " (") == 1 { on = 1; next } on && /^## / { exit } on' \
+              CHANGELOG.md > "$RUNNER_TEMP/notes.md"
+            prerelease=()
+            case "$version" in *-*) prerelease=(--prerelease) ;; esac
+            gh release create "$TAG" dist/* --repo "$GITHUB_REPOSITORY" --verify-tag --draft \
+              --title "Writ $version" --notes-file "$RUNNER_TEMP/notes.md" "${prerelease[@]}"
+          fi
+
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          registry-url: https://registry.npmjs.org
+          package-manager-cache: false
+
+      # A preview goes to the `preview` dist-tag, so `npm install @anijani/writ` never picks it.
+      - name: Publish to npm
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          TAG: ${{ github.ref_name }}
+        run: |
+          version=${TAG#v}
+          if [ "$(npm view "@anijani/writ@$version" version 2>/dev/null || true)" = "$version" ]; then
+            echo "@anijani/writ@$version is already on npm"
+            exit 0
+          fi
+          dist_tag=latest
+          case "$version" in *-preview.*) dist_tag=preview ;; esac
+          npm publish "dist/anijani-writ-$version.tgz" --tag "$dist_tag" --provenance --access public
+
+      - name: Stage the Python packages
+        run: |
+          mkdir pypi-dist
+          cp dist/writ_kernel-* pypi-dist/
+
+      - uses: pypa/gh-action-pypi-publish@7245906fb61fa33a13554f9d5fb856fe61758086 # v1.14.3
+        with:
+          packages-dir: pypi-dist/
+          skip-existing: true
+
+      - name: Publish the GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.ref_name }}
+        run: |
+          latest=()
+          case "${TAG#v}" in *-*) latest=(--latest=false) ;; esac
+          gh release edit "$TAG" --repo "$GITHUB_REPOSITORY" --draft=false "${latest[@]}"

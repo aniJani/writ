@@ -1,0 +1,10 @@
+{
+  "writ": "0.1",
+  "approver_roles": ["approver"],
+  "labels": { "risk": { "order": ["low", "high"] } },
+  "rules": [{ "when": { "risk": ">=high" }, "require": { "consent": "per_call" } }],
+  "actions": {
+    "payments.refund": { "labels": { "risk": "high" }, "approval_ttl_ms": 600000, "idempotent": true, "retry_after_unknown": true, "max_attempts": 2 },
+    "docs.read": { "labels": { "risk": "low" } }
+  }
+}

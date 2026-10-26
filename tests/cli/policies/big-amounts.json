@@ -1,0 +1,1 @@
+{"writ":"0.1","meters":{"spend":{"currency":"USD","cap":9007199254740991,"max_per_call":9007199254740991,"scope":"session","window_ms":86400000},"wei":{"currency":"WEI","scope":"principal","window_ms":86400000}},"actions":{"pay":{"meters":["spend"]},"mint":{"meters":["wei"]}}}

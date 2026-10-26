@@ -1,0 +1,3 @@
+error: payments.refund: retry_after_unknown is true, but under SEP-2848 outcome-unknown is final: a call whose outcome is unknown must never run again
+warning: docs.read: max_attempts is above 1 without retry_after_unknown, so it has no effect: under SEP-2848 a call runs at most once
+1 error, 1 warning

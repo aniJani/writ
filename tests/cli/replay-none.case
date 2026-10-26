@@ -1,0 +1,3 @@
+args: replay
+exit: 2
+stderr: error: expected at least one trace file

@@ -1,0 +1,2 @@
+args: check schema/presets/generic-tiers.json
+exit: 0

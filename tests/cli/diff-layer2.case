@@ -1,0 +1,2 @@
+args: diff tests/cli/layer2/team.json tests/cli/diff/team-high.json tests/cli/diff/team-events.jsonl
+exit: 1

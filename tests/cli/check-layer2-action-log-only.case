@@ -1,0 +1,2 @@
+args: check tests/cli/layer2/team-action-log-only.json
+exit: 0

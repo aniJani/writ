@@ -1,0 +1,6 @@
+{
+  "writ": "0.1",
+  "extends": ["diamond/left-bad.json", "diamond/right-bad.json"],
+  "approver_roles": ["owner"],
+  "actions": { "notes.read": {} }
+}

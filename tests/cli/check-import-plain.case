@@ -1,0 +1,2 @@
+args: check tests/cli/import/plain-draft.json
+exit: 0

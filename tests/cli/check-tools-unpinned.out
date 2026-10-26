@@ -1,0 +1,2 @@
+warning: notes.put: it allows tool "notes.put" but records no source.tool_digest, so writ cannot detect changes to the tool
+0 errors, 1 warning

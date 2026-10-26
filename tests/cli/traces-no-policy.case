@@ -1,0 +1,3 @@
+args: traces
+exit: 2
+stderr: error: expected exactly one policy file

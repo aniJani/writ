@@ -1,0 +1,9 @@
+usage: writ oracle <policy.json> [--state <state.json>] [--state-out <path>] [--digest <d>]
+
+Read one event JSON per line on stdin, step the kernel, and print one verdict JSON line per input line.
+A line that does not parse or decode (an empty line included) prints {"error": "..."} and leaves the state unchanged.
+  --state <file>      start from a saved state instead of State.initial
+  --state-out <path>  write the final state (canonical JSON) at end of input
+  --digest <d>        use this policy digest instead of the digest of the policy file
+
+Exit 0 at end of input, 2 for a usage, IO or policy error, or when --state does not match the digest.

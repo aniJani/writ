@@ -1,0 +1,1 @@
+{"ok":true,"errors":[],"warnings":[{"code":"tool_unpinned","action":"notes.put","message":"it allows tool \"notes.put\" but records no source.tool_digest, so writ cannot detect changes to the tool"}],"policy_digest":"sha256:6eaddc61d4a443d27880a886bc1119f2292cf878b19bc709b15004801847165e"}

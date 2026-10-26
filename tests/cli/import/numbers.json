@@ -1,0 +1,10 @@
+{
+  "tools": [
+    {
+      "name": "météo.prévoir",
+      "inputSchema": { "type": "object" },
+      "annotations": { "readOnlyHint": "yes", "cost": 0.25, "window": { "min": 1, "max": 1e20 }, "limit": -999999999999999, "steps": [1, 2.5], "openWorldHint": true }
+    },
+    { "name": "weird", "inputSchema": { "type": "object" }, "annotations": "trust me" }
+  ]
+}

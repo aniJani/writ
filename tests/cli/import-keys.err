@@ -1,0 +1,2 @@
+keys\u0007: source.annotations leaves out a\nb: a\nb.c\nd is 0.5, which a policy cannot hold (integers within plus or minus (2^53 - 1) only)
+keys\u0007: the server says readOnlyHint "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx...; read_only left "false" (lower it after review)

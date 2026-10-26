@@ -1,0 +1,4 @@
+args: oracle tests/cli/policies/formats-shop.json --state-out @TMP@/state.json
+stdin: tests/cli/formats-events-a.jsonl
+exit: 0
+outfile: @TMP@/state.json tests/cli/states/formats-state.json

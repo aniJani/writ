@@ -1,0 +1,3 @@
+args: check tests/cli/policies/mcp-approval-1.json --profile writ/mcp-tool-approval
+exit: 2
+stderr: error: unknown profile "writ/mcp-tool-approval", expected mcp-tool-approval

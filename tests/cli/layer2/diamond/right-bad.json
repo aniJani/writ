@@ -1,0 +1,5 @@
+{
+  "writ": "0.1",
+  "extends": ["../diamond/base-bad.json"],
+  "actions": { "notes.share": {} }
+}

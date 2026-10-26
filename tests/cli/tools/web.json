@@ -1,0 +1,28 @@
+{
+  "tools": [
+    {
+      "name": "web.fetch",
+      "title": "Fetch a page",
+      "description": "Fetch a URL and return its text. Résumé: “quotes” and 日本語 kept.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "url": { "type": "string", "format": "uri" },
+          "timeout": { "type": "number", "minimum": 0.5, "maximum": 30.0, "default": 1e1 },
+          "headers": { "type": "object", "additionalProperties": { "type": "string" } }
+        },
+        "required": ["url"]
+      },
+      "annotations": { "readOnlyHint": true, "openWorldHint": true }
+    },
+    {
+      "name": "notes.put",
+      "description": "Save a note.",
+      "inputSchema": {
+        "type": "object",
+        "properties": { "text": { "type": "string", "maxLength": 10000 } }
+      }
+    }
+  ],
+  "nextCursor": null
+}

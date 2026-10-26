@@ -1,0 +1,2 @@
+FAIL web-chat/parallel-calls step 1: expected verdict rejected, got accepted
+1 trace, 1 failed

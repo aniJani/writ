@@ -1,0 +1,39 @@
+{
+  "writ": "0.1",
+  "extends": [
+    "../../../schema/presets/mcp-annotations.json"
+  ],
+  "approver_roles": [
+    "owner"
+  ],
+  "actions": {
+    "web.fetch": {
+      "labels": {
+        "read_only": "false",
+        "destructive": "true",
+        "idempotent": "false",
+        "open_world": "true"
+      },
+      "source": {
+        "tool_digest": "sha256:2090263f72e715d1bcdc3e8c2dbba75a65f0567b365ee68a8f371b5a9a6b1cab",
+        "server": "web",
+        "annotations": {
+          "readOnlyHint": true,
+          "openWorldHint": true
+        }
+      }
+    },
+    "notes.put": {
+      "labels": {
+        "read_only": "false",
+        "destructive": "true",
+        "idempotent": "false",
+        "open_world": "true"
+      },
+      "source": {
+        "tool_digest": "sha256:e3176c44afb0a5843e2d1fc0d899dffc45765467f4ef10794aa545093153230b",
+        "server": "web"
+      }
+    }
+  }
+}

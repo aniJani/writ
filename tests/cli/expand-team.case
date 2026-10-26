@@ -1,0 +1,2 @@
+args: expand tests/cli/layer2/team.json
+exit: 0

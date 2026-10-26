@@ -1,0 +1,2 @@
+args: check tests/cli/tools/policy.json --tools tests/cli/tools/mail.json --server web
+exit: 0

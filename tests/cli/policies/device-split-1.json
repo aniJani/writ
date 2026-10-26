@@ -1,0 +1,1 @@
+{"writ":"0.1","approver_roles":["owner"],"limits":{"authorized_ttl_ms":300000,"max_consecutive_failures":3},"actions":{"files.move":{"permission":"files.write","consent":"per_call"},"files.list":{"permission":"files.read","consent":"none"}}}

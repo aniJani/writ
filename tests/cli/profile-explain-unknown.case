@@ -1,0 +1,3 @@
+args: explain corpus/examples/mcp-approval.jsonl --profile other
+exit: 2
+stderr: error: unknown profile "other", expected mcp-tool-approval

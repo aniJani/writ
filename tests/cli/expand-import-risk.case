@@ -1,0 +1,2 @@
+args: expand tests/cli/import/risk-draft.json
+exit: 0

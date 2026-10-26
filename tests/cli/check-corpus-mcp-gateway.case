@@ -1,0 +1,2 @@
+args: check tests/cli/policies/mcp-gateway-1.json
+exit: 0

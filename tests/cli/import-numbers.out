@@ -1,0 +1,40 @@
+{
+  "writ": "0.1",
+  "extends": [
+    "presets/mcp-annotations.json"
+  ],
+  "approver_roles": [
+    "owner"
+  ],
+  "actions": {
+    "météo.prévoir": {
+      "labels": {
+        "read_only": "false",
+        "destructive": "true",
+        "idempotent": "false",
+        "open_world": "true"
+      },
+      "source": {
+        "tool_digest": "sha256:dac5cda76700ccadcae06699d73429f732ed9f8a5c36076a72f60c33338ecc16",
+        "server": "weather",
+        "annotations": {
+          "readOnlyHint": "yes",
+          "limit": -999999999999999,
+          "openWorldHint": true
+        }
+      }
+    },
+    "weird": {
+      "labels": {
+        "read_only": "false",
+        "destructive": "true",
+        "idempotent": "false",
+        "open_world": "true"
+      },
+      "source": {
+        "tool_digest": "sha256:9172f24d043e8aad437c9df52fc3b5acb62b4e186f70dbc7c9fc24a10bc3efb4",
+        "server": "weather"
+      }
+    }
+  }
+}

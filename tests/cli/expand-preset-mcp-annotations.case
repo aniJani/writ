@@ -1,0 +1,2 @@
+args: expand tests/cli/presets/mcp-annotations.json
+exit: 0

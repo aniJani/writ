@@ -1,0 +1,4 @@
+args: oracle tests/cli/policies/big-amounts.json --state-out @TMP@/state.json
+stdin: tests/cli/oracle-big-events.jsonl
+exit: 0
+outfile: @TMP@/state.json tests/cli/states/after-big.json

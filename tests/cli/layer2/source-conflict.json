@@ -1,0 +1,8 @@
+{
+  "writ": "0.1",
+  "extends": ["source-org.json"],
+  "approver_roles": ["owner"],
+  "actions": {
+    "files.search": { "permission": "files.read", "source": { "tool_digest": "sha256:6dd58717871312d14a4553a8f7f7981b0f7d4217863d4a02369c86f50efce0aa", "server": "files" } }
+  }
+}

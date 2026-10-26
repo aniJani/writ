@@ -1,0 +1,17 @@
+.lake/
+node_modules/
+packages/writ/dist/
+packages/writ/wasm/
+packages/writ-py/src/writ/wasm/
+.wasm-build/
+playground/site/
+packages/writ/LICENSE
+build/corpus/
+build/tar/
+build/writ-corpus-*.tar.gz
+build/release/out/
+build/release/state/
+build/release/logs/
+__pycache__/
+.pytest_cache/
+packages/writ-py/dist/

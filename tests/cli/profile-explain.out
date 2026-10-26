@@ -1,0 +1,115 @@
+trace mcp-approval/s1-pending-not-executed: SEP-2848 statement 1. An MCP client calls payments.refund; the kernel answers needs_approval, which the server turns into a working task. A dispatch while the approval is pending is refused, a repeated call gets the same request id back, so the server can return the existing task, and docs.read runs without approval. Nothing claims the refund.
+  0 session_start -> accepted none
+  1 turn_start -> accepted none
+  2 step_start -> accepted none
+  3 propose call_id=c1 tool=payments.refund -> accepted needs_approval
+      envelope {"reason":"insufficient_authorization","remediation":"available","remediationHints":[{"type":"task"}],"requestId":{"session":"s1","call":"c1","generation":0}}
+  4 dispatch call_id=c1 -> rejected (reason call_awaiting, retry fix_request): That request is still waiting for approval.
+      envelope {"reason":"insufficient_authorization","remediation":"unavailable","code":"call_awaiting","retry":"fix_request","message":"This call is still waiting for approval. Do not repeat it; wait for the approval decision."}
+  5 propose call_id=c1 tool=payments.refund -> accepted needs_approval
+      envelope {"reason":"insufficient_authorization","remediation":"available","remediationHints":[{"type":"task"}],"requestId":{"session":"s1","call":"c1","generation":0}}
+  6 propose call_id=c2 tool=docs.read -> accepted allowed
+  7 dispatch call_id=c2 -> accepted dispatch_claimed
+  8 turn_end -> accepted none
+trace mcp-approval/s2-approved-once: SEP-2848 statement 2. The approver grants the refund out of band; the first dispatch claims it, a second dispatch of the same call is refused, and a repeated call reports the call's state instead of authorizing it again.
+  0 session_start -> accepted none
+  1 turn_start -> accepted none
+  2 step_start -> accepted none
+  3 propose call_id=c1 tool=payments.refund -> accepted needs_approval
+      envelope {"reason":"insufficient_authorization","remediation":"available","remediationHints":[{"type":"task"}],"requestId":{"session":"s1","call":"c1","generation":0}}
+  4 turn_end -> accepted none
+  5 approve call_id=c1 approver=ops -> accepted authorized
+  6 turn_start -> accepted none
+  7 step_start -> accepted none
+  8 dispatch call_id=c1 -> accepted dispatch_claimed
+  9 dispatch call_id=c1 -> rejected (reason call_dispatched, retry fix_request): That request is already running.
+      envelope {"reason":"insufficient_authorization","remediation":"unavailable","code":"call_dispatched","retry":"fix_request","message":"This call is running and has no result yet. Do not run it again; wait for its result."}
+  10 dispatch call_id=c1 -> rejected (reason call_dispatched, retry fix_request): That request is already running.
+      envelope {"reason":"insufficient_authorization","remediation":"unavailable","code":"call_dispatched","retry":"fix_request","message":"This call is running and has no result yet. Do not run it again; wait for its result."}
+  11 propose call_id=c1 tool=payments.refund -> accepted existing
+  12 result call_id=c1 outcome=succeeded -> accepted none
+      disposition call_id=c1 approved-executed
+  13 propose call_id=c1 tool=payments.refund -> accepted existing
+  14 dispatch call_id=c1 -> rejected (reason call_ended, retry never): That request has already finished.
+      envelope {"reason":"insufficient_authorization","remediation":"unavailable","code":"call_ended","retry":"never","message":"This call has already finished. Do not repeat it; propose a new call if you need one."}
+trace mcp-approval/s3-denied-not-executed: SEP-2848 statement 3. Two refunds await approval. The approver rejects the first: it can be neither dispatched nor reported, so its disposition is denied-not-executed. The second is approved, claimed once and reported failed, which is an execution error after the claim, not a denial. A new call with the rejected arguments is denied until the user starts a turn.
+  0 session_start -> accepted none
+  1 turn_start -> accepted none
+  2 step_start -> accepted none
+  3 propose call_id=c1 tool=payments.refund -> accepted needs_approval
+      envelope {"reason":"insufficient_authorization","remediation":"available","remediationHints":[{"type":"task"}],"requestId":{"session":"s1","call":"c1","generation":0}}
+  4 propose call_id=c2 tool=payments.refund -> accepted needs_approval
+      envelope {"reason":"insufficient_authorization","remediation":"available","remediationHints":[{"type":"task"}],"requestId":{"session":"s1","call":"c2","generation":0}}
+  5 turn_end -> accepted none
+  6 reject call_id=c1 approver=ops -> accepted none
+      disposition call_id=c1 denied-not-executed
+  7 approve call_id=c2 approver=ops -> accepted authorized
+  8 turn_start -> accepted none
+  9 step_start -> accepted none
+  10 dispatch call_id=c1 -> rejected (reason call_ended, retry never): That request has already finished.
+      envelope {"reason":"insufficient_authorization","remediation":"unavailable","code":"call_ended","retry":"never","message":"This call has already finished. Do not repeat it; propose a new call if you need one."}
+  11 result call_id=c1 outcome=failed -> rejected (reason call_ended, retry never): That request has already finished.
+      envelope {"reason":"insufficient_authorization","remediation":"unavailable","code":"call_ended","retry":"never","message":"This call has already finished. Do not repeat it; propose a new call if you need one."}
+  12 dispatch call_id=c2 -> accepted dispatch_claimed
+  13 result call_id=c2 outcome=failed -> accepted none
+      disposition call_id=c2 execution-error
+  14 propose call_id=c1 tool=payments.refund -> accepted existing
+  15 propose call_id=c2 tool=payments.refund -> accepted existing
+  16 propose call_id=c3 tool=payments.refund -> accepted denied (reason previously_rejected, retry after_user_action): You rejected this earlier in the conversation.
+      disposition call_id=c3 denied-not-executed
+      envelope {"reason":"insufficient_authorization","remediation":"unavailable","code":"previously_rejected","retry":"after_user_action","message":"The user rejected this exact call. Do not propose it again until the user sends a new message; ask the user what they want instead."}
+trace mcp-approval/s4-changed-arguments: SEP-2848 statement 4. An approval that reviewed digest d2 does not count for c1 at d1, and the approval of d1 covers d1 only: a dispatch with d2 is refused and so is re-proposing c1 with d2, so the client cannot steer the approved call to new arguments. A new call c2 with d1 asks again; the approver edits it to d2 while approving, which moves it to generation 1 and, with per_call consent, counts as the approver's approval of d2 only: a dispatch with d1 is refused and d2 runs.
+  0 session_start -> accepted none
+  1 turn_start -> accepted none
+  2 step_start -> accepted none
+  3 propose call_id=c1 tool=payments.refund -> accepted needs_approval
+      envelope {"reason":"insufficient_authorization","remediation":"available","remediationHints":[{"type":"task"}],"requestId":{"session":"s1","call":"c1","generation":0}}
+  4 propose call_id=c2 tool=payments.refund -> accepted needs_approval
+      envelope {"reason":"insufficient_authorization","remediation":"available","remediationHints":[{"type":"task"}],"requestId":{"session":"s1","call":"c2","generation":0}}
+  5 turn_end -> accepted none
+  6 approve call_id=c1 approver=ops -> rejected (reason digest_mismatch, retry fix_request): The request no longer matches what was reviewed.
+      envelope {"reason":"insufficient_authorization","remediation":"unavailable","code":"digest_mismatch","retry":"fix_request","message":"The call's contents differ from what was reviewed. Run only the exact call that was reviewed, or propose the changed call for review."}
+  7 approve call_id=c1 approver=ops -> accepted authorized
+  8 approve call_id=c2 approver=ops -> accepted authorized
+  9 turn_start -> accepted none
+  10 step_start -> accepted none
+  11 dispatch call_id=c1 -> rejected (reason digest_mismatch, retry fix_request): The request no longer matches what was reviewed.
+      envelope {"reason":"insufficient_authorization","remediation":"unavailable","code":"digest_mismatch","retry":"fix_request","message":"The call's contents differ from what was reviewed. Run only the exact call that was reviewed, or propose the changed call for review."}
+  12 propose call_id=c1 tool=payments.refund -> rejected (reason duplicate_call, retry fix_request): That action reused the label of an earlier, different request.
+      envelope {"reason":"insufficient_authorization","remediation":"unavailable","code":"duplicate_call","retry":"fix_request","message":"The system that runs tool calls hit an internal error (it reused the identifier of a different call). Your request was not the cause; do not change or repeat it on your own, and tell the user if this keeps happening."}
+  13 dispatch call_id=c1 -> accepted dispatch_claimed
+  14 dispatch call_id=c2 -> rejected (reason digest_mismatch, retry fix_request): The request no longer matches what was reviewed.
+      envelope {"reason":"insufficient_authorization","remediation":"unavailable","code":"digest_mismatch","retry":"fix_request","message":"The call's contents differ from what was reviewed. Run only the exact call that was reviewed, or propose the changed call for review."}
+  15 dispatch call_id=c2 -> accepted dispatch_claimed
+trace mcp-approval/s5-cancelled-or-expired: SEP-2848 statement 5. Three refunds await approval. The client cancels c1, so a later approval and dispatch of it are refused. c2 is approved after its one hour approval TTL, which is refused, and the host then records the expiry. c3 is approved in time but dispatched after its ten minute authorized TTL, so the dispatch is denied. None of the three claims.
+  0 session_start -> accepted none
+  1 turn_start -> accepted none
+  2 step_start -> accepted none
+  3 propose call_id=c1 tool=payments.refund -> accepted needs_approval
+      envelope {"reason":"insufficient_authorization","remediation":"available","remediationHints":[{"type":"task"}],"requestId":{"session":"s1","call":"c1","generation":0}}
+  4 propose call_id=c2 tool=payments.refund -> accepted needs_approval
+      envelope {"reason":"insufficient_authorization","remediation":"available","remediationHints":[{"type":"task"}],"requestId":{"session":"s1","call":"c2","generation":0}}
+  5 propose call_id=c3 tool=payments.refund -> accepted needs_approval
+      envelope {"reason":"insufficient_authorization","remediation":"available","remediationHints":[{"type":"task"}],"requestId":{"session":"s1","call":"c3","generation":0}}
+  6 turn_end -> accepted none
+  7 cancel call_id=c1 -> accepted none
+      disposition call_id=c1 cancelled
+  8 approve call_id=c1 approver=ops -> rejected (reason call_ended, retry never): That request has already finished.
+      envelope {"reason":"insufficient_authorization","remediation":"unavailable","code":"call_ended","retry":"never","message":"This call has already finished. Do not repeat it; propose a new call if you need one."}
+  9 approve call_id=c3 approver=ops -> accepted authorized
+  10 approve call_id=c2 approver=ops -> rejected (reason approval_expired, retry after_user_action): The approval request timed out.
+      envelope {"reason":"insufficient_authorization","remediation":"unavailable","code":"approval_expired","retry":"after_user_action","message":"The approval request expired before anyone answered. Ask the user whether to try again before you propose it again."}
+  11 approval_expire call_id=c2 -> accepted none
+      disposition call_id=c2 denied-not-executed
+  12 turn_start -> accepted none
+  13 step_start -> accepted none
+  14 dispatch call_id=c1 -> rejected (reason call_ended, retry never): That request has already finished.
+      envelope {"reason":"insufficient_authorization","remediation":"unavailable","code":"call_ended","retry":"never","message":"This call has already finished. Do not repeat it; propose a new call if you need one."}
+  15 dispatch call_id=c2 -> rejected (reason call_ended, retry never): That request has already finished.
+      envelope {"reason":"insufficient_authorization","remediation":"unavailable","code":"call_ended","retry":"never","message":"This call has already finished. Do not repeat it; propose a new call if you need one."}
+  16 dispatch call_id=c3 -> accepted dispatch_denied (reason authorization_expired, retry after_user_action): Your approval expired before the action ran.
+      disposition call_id=c3 denied-not-executed
+      envelope {"reason":"insufficient_authorization","remediation":"unavailable","code":"authorization_expired","retry":"after_user_action","message":"The approval for this call has expired. Ask the user to approve again before you retry."}
+  17 dispatch call_id=c3 -> rejected (reason call_ended, retry never): That request has already finished.
+      envelope {"reason":"insufficient_authorization","remediation":"unavailable","code":"call_ended","retry":"never","message":"This call has already finished. Do not repeat it; propose a new call if you need one."}
+  18 propose call_id=c1 tool=payments.refund -> accepted existing

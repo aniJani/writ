@@ -1,0 +1,8 @@
+{"type":"session_start","seq":1,"time":0,"state_version":0,"session_id":"s1","policy_digest":"sha256:e54f9560065605b8bb72e3fed456f26ed0a2cb28482960430ceb6f96d0d1e162","requester":"u1","permissions":["shop.read","shop.buy"],"approvers":{"laptop":{"principal":"u1","kind":"human","roles":["owner"]}},"ledger":{}}
+{"type":"turn_start","seq":2,"time":1000,"state_version":1,"user_initiated":true}
+{"type":"step_start","seq":3,"time":1000,"state_version":2}
+{"type":"propose","seq":4,"time":1100,"state_version":3,"call_id":"c1","tool":"buy","call_digest":"d-buy-lamp","guards":{},"escalators":{}}
+{"type":"approve","seq":5,"time":9000,"state_version":4,"call_id":"c1","request_id":{"session":"s1","call":"c1","generation":0},"approver":"laptop","reviewed_digest":"d-buy-lamp"}
+{"type":"dispatch","seq":6,"time":9100,"state_version":5,"call_id":"c1","attempt":1,"call_digest":"d-buy-lamp","guards":{},"idempotency_key":"k-s1-c1"}
+{"type":"result","seq":7,"time":9500,"state_version":6,"call_id":"c1","outcome":"succeeded"}
+{"type":"turn_end","seq":8,"time":9600,"state_version":7}

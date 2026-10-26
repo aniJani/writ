@@ -1,0 +1,2 @@
+error: an extended policy (in tests/cli/layer2/diamond/base-bad.json) sets policy-level field "mode"; only the extending policy may
+1 error, 0 warnings

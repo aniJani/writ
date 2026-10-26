@@ -1,0 +1,3 @@
+args: import mcp tests/cli/import/numbers.json --server weather
+exit: 0
+errfile: tests/cli/import-numbers.err

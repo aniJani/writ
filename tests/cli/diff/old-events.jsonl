@@ -1,0 +1,11 @@
+{"type":"session_start","seq":1,"time":0,"state_version":0,"session_id":"s1","policy_digest":"sha256:295be5b799a0c77012d75cea8e1334425b06aee33a011e8d07aa40a44ab4adbf","requester":"u1","permissions":["shop.read","shop.buy"],"approvers":{"laptop":{"principal":"u1","kind":"human","roles":["owner"]}},"ledger":{}}
+{"type":"turn_start","seq":2,"time":1000,"state_version":1,"user_initiated":true}
+{"type":"step_start","seq":3,"time":1000,"state_version":2}
+{"type":"propose","seq":4,"time":1100,"state_version":3,"call_id":"c1","tool":"buy","call_digest":"d-buy-lamp","guards":{},"escalators":{}}
+{"type":"dispatch","seq":5,"time":1200,"state_version":4,"call_id":"c1","attempt":1,"call_digest":"d-buy-lamp","guards":{},"idempotency_key":"k-s1-c1"}
+{"type":"result","seq":6,"time":1500,"state_version":5,"call_id":"c1","outcome":"succeeded"}
+{"type":"step_start","seq":7,"time":1600,"state_version":6}
+{"type":"propose","seq":8,"time":1700,"state_version":7,"call_id":"c2","tool":"search","call_digest":"d-q-lamps","guards":{},"escalators":{}}
+{"type":"dispatch","seq":9,"time":1800,"state_version":8,"call_id":"c2","attempt":1,"call_digest":"d-q-lamps","guards":{},"idempotency_key":"k-s1-c2"}
+{"type":"result","seq":10,"time":1900,"state_version":9,"call_id":"c2","outcome":"succeeded"}
+{"type":"turn_end","seq":11,"time":2000,"state_version":10}

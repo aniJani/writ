@@ -1,0 +1,3 @@
+args: check tests/cli/policies/source-bad.json
+exit: 2
+stderr: error: tests/cli/policies/source-bad.json: actions.web.fetch.source.tool_digest: expected "sha256:" followed by 64 lowercase hex digits

@@ -1,0 +1,2 @@
+warning: read_file: it allows tool "read_file" but its source pins tool "write_file"
+0 errors, 1 warning

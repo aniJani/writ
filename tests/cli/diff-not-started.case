@@ -1,0 +1,3 @@
+args: diff tests/cli/diff/old.json tests/cli/diff/tight.json tests/cli/diff/not-started.jsonl
+exit: 2
+stderr: error: tests/cli/diff/not-started.jsonl: line 1: the first event must be a session_start, not turn_start; diff replays one session per events file

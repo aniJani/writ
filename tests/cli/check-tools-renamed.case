@@ -1,0 +1,2 @@
+args: check tests/cli/tools/renamed.json --tools tests/cli/tools/files.json
+exit: 0

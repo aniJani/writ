@@ -1,0 +1,4 @@
+args: oracle tests/cli/policies/simple.json --state-out @TMP@/state.json
+stdin: tests/cli/oracle-events.jsonl
+exit: 0
+outfile: @TMP@/state.json tests/cli/states/after-1.json

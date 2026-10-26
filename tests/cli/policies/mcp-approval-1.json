@@ -1,0 +1,1 @@
+{"writ":"0.1","approver_roles":["approver"],"actions":{"payments.refund":{"consent":"per_call","approval_ttl_ms":3600000,"authorized_ttl_ms":600000},"docs.read":{}}}

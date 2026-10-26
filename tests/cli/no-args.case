@@ -1,0 +1,3 @@
+args: 
+exit: 2
+stderr: usage: writ <command> [args]

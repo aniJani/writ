@@ -1,0 +1,2 @@
+args: replay corpus/examples/coding-agent.jsonl corpus/examples/langgraph-resume.jsonl corpus/examples/mcp-approval.jsonl corpus/examples/mcp-gateway.jsonl corpus/examples/device-split.jsonl corpus/examples/payments.jsonl corpus/examples/web-chat.jsonl
+exit: 0

@@ -1,0 +1,9 @@
+{
+  "writ": "0.1",
+  "extends": ["quorum-org.json"],
+  "mode": "log_only",
+  "approver_roles": ["dba", "intern"],
+  "meters": { "usd_day": { "currency": "USD", "window_ms": 86400000 } },
+  "limits": { "approval_ttl_ms": 999999999999 },
+  "actions": { "notes.read": {} }
+}

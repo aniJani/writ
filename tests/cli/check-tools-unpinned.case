@@ -1,0 +1,2 @@
+args: check tests/cli/tools/unpinned.json --tools tests/cli/tools/web.json
+exit: 0

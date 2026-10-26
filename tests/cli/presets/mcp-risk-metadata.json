@@ -1,0 +1,24 @@
+{
+  "writ": "0.1",
+  "extends": ["../../../schema/presets/mcp-risk-metadata.json"],
+  "approver_roles": ["owner", "admin"],
+  "limits": { "approval_ttl_ms": 600000 },
+  "actions": {
+    "notes.read": {
+      "labels": { "risk_level": "low", "blast_radius": "self", "reversibility": "reversible", "approval_recommendation": "none" }
+    },
+    "notes.share": {
+      "labels": { "risk_level": "medium", "blast_radius": "team", "reversibility": "reversible", "approval_recommendation": "single" },
+      "grantable": { "scope": "session", "max_uses": 10 }
+    },
+    "deploy.prod": {
+      "labels": { "risk_level": "high", "blast_radius": "org", "reversibility": "partially", "approval_recommendation": "single" },
+      "grantable": { "scope": "turn", "max_uses": 3 }
+    },
+    "db.drop": {
+      "labels": { "risk_level": "critical", "blast_radius": "org", "reversibility": "irreversible", "approval_recommendation": "multi" },
+      "grantable": { "scope": "turn", "max_uses": 3 }
+    },
+    "mail.blast": { "grantable": { "scope": "turn", "max_uses": 3 } }
+  }
+}

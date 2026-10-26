@@ -1,0 +1,7 @@
+name = "writ"
+version = "1.2.3-preview.5"
+defaultTargets = ["Writ"]
+
+[[lean_lib]]
+name = "Writ"
+version = "9.9.9"

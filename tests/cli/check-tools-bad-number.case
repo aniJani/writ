@@ -1,0 +1,3 @@
+args: check tests/cli/tools/policy.json --tools tests/cli/import/bad-number.json
+exit: 2
+stderr: error: tests/cli/import/bad-number.json: [0].inputSchema.properties.x.maximum: number has more than 15 significant digits at line 1, column 90

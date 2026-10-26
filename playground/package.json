@@ -1,0 +1,10 @@
+{
+  "name": "writ-playground",
+  "private": true,
+  "type": "module",
+  "description": "A browser page that runs the Writ kernel on a policy and events you choose",
+  "scripts": {
+    "pretest": "node ../packages/writ/scripts/check-wasm.mjs",
+    "test": "node --test test/"
+  }
+}

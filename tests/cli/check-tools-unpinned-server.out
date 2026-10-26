@@ -1,0 +1,4 @@
+warning: web.fetch: tool "web.fetch" is not in the tool list
+warning: notes.put: tool "notes.put" is not in the tool list
+warning: send_mail: it allows tool "mail.send" but its source is not for server "web", so this check cannot detect changes to the tool
+0 errors, 3 warnings

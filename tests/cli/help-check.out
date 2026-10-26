@@ -1,0 +1,15 @@
+usage: writ check <policy.json> [--json] [--tools <tools.json> [--server <name>]] [--profile <id>]
+
+Parse and decode a policy, then report its problems and warnings.
+  --json                print one JSON object instead of text
+  --tools <tools.json>  compare each action's source.tool_digest with this MCP tool list:
+                        a changed tool is an error (tool_changed); a tool not listed, listed
+                        but pinned by no compared source, or named by no action is a warning
+                        (tool_missing, tool_unpinned, tool_unlisted)
+  --server <name>       with --tools, compare only actions whose source.server is this name
+  --profile <id>        also report the settings a standards profile forbids; the one profile is
+                        mcp-tool-approval (MCP SEP-2848): retry_after_unknown is an error
+                        (profile_retry_after_unknown), max_attempts above 1 a warning
+                        (profile_max_attempts)
+
+Exit 0 when there are no errors, 1 when there are errors, 2 when a file cannot be read, parsed or decoded.

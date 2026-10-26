@@ -1,0 +1,2 @@
+args: check tests/cli/policies/simple.json
+exit: 0

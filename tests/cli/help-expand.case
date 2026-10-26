@@ -1,0 +1,2 @@
+args: expand --help
+exit: 0

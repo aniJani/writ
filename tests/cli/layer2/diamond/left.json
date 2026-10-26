@@ -1,0 +1,5 @@
+{
+  "writ": "0.1",
+  "extends": ["base.json"],
+  "actions": { "notes.edit": { "labels": { "risk": "low" }, "guards": ["owner_present"] } }
+}

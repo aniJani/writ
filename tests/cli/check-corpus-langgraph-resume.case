@@ -1,0 +1,2 @@
+args: check tests/cli/policies/langgraph-resume-1.json
+exit: 0

@@ -1,0 +1,11 @@
+{
+  "writ": "0.1",
+  "approver_roles": ["owner"],
+  "meters": {
+    "usd_day": { "currency": "USD", "cap": 4, "scope": "principal", "window_ms": 1000, "max_per_call": 3 },
+    "calls_total": { "unit": "calls", "scope": "session" }
+  },
+  "actions": {
+    "card.charge": { "meters": ["usd_day", "calls_total"] }
+  }
+}

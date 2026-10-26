@@ -1,0 +1,5 @@
+{
+  "writ": "0.1",
+  "mode": "log_only",
+  "actions": { "notes.delete": {} }
+}

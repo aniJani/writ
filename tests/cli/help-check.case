@@ -1,0 +1,2 @@
+args: check --help
+exit: 0

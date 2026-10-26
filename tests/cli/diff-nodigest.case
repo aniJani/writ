@@ -1,0 +1,2 @@
+args: diff tests/cli/diff/coding-old.json tests/cli/diff/coding-new.json tests/cli/diff/nodigest-events.jsonl
+exit: 1

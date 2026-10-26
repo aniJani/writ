@@ -1,0 +1,4 @@
+cmd: scripts/check-version.sh
+args: --bogus
+exit: 2
+stderr: usage: scripts/check-version.sh

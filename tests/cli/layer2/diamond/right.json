@@ -1,0 +1,5 @@
+{
+  "writ": "0.1",
+  "extends": ["./base.json"],
+  "actions": { "notes.share": { "labels": { "risk": "low" }, "flags": ["sends_external"] } }
+}

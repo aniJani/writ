@@ -1,0 +1,2 @@
+args: check tests/cli/policies/esc-name.json
+exit: 1

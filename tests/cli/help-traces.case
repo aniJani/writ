@@ -1,0 +1,2 @@
+args: traces --help
+exit: 0

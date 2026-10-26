@@ -1,0 +1,5 @@
+warning: meter "free" has no cap, so it records usage but never denies a call
+warning: principal meter "life" has no window_ms, so its cap is a lifetime limit for each principal
+warning: meter "odd" has max_per_call above its cap, so the cap denies calls the per-call limit allows
+warning: r: retry_after_unknown is set but max_attempts is 1, so an unknown call can never be retried
+0 errors, 4 warnings

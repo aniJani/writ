@@ -1,0 +1,6 @@
+{"verdict":"accepted","state_version":1}
+{"verdict":"accepted","state_version":2}
+{"error":"expected object key at line 1, column 30"}
+{"verdict":"accepted","state_version":3}
+{"verdict":"accepted","state_version":4,"decision":"allowed"}
+{"verdict":"accepted","state_version":5,"decision":"needs_approval","request_id":{"session":"s1","call":"c2","generation":0}}

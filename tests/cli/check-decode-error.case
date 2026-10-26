@@ -1,0 +1,3 @@
+args: check tests/cli/policies/decode-error.json
+exit: 2
+stderr: error: tests/cli/policies/decode-error.json: actions.a.permision: unknown field

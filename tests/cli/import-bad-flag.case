@@ -1,0 +1,3 @@
+args: import mcp tests/cli/import/plain.json --trust
+exit: 2
+stderr: error: unknown option --trust

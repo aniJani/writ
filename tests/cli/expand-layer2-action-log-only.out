@@ -1,0 +1,1 @@
+{"actions":{"db.drop":{"consent":{"quorum":2,"roles":["dba"]}},"notes.read":{"mode":"log_only"},"shop.buy":{"consent":{"quorum":2,"roles":["dba"]}}},"approver_roles":["dba"],"limits":{"approval_ttl_ms":600000},"writ":"0.1"}

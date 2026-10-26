@@ -1,0 +1,12 @@
+{
+  "writ": "0.1",
+  "approver_roles": ["owner"],
+  "limits": { "approval_ttl_ms": 600000 },
+  "actions": {
+    "web.fetch": {
+      "permission": "web.read",
+      "source": { "tool_digest": "sha256:2090263f72e715d1bcdc3e8c2dbba75a65f0567b365ee68a8f371b5a9a6b1cab", "server": "web" }
+    },
+    "notes.put": { "consent": "per_call" }
+  }
+}

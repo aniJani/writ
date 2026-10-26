@@ -1,0 +1,1 @@
+{"actions":{"vm.restart":{"consent":"per_call","permission":"vm.power"},"vm.status":{"permission":"vm.read"},"vm.terminate":{"consent":"per_call","exposed":false,"permission":"vm.admin"}},"approver_roles":["owner"],"writ":"0.1"}

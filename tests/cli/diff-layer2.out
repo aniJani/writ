@@ -1,0 +1,3 @@
+line 5 seq 5 propose c2: {"verdict":"accepted","decision":"needs_approval","request_id":{"session":"s1","call":"c2","generation":0}} -> {"verdict":"accepted","decision":"denied","reason":"guard_false"} (first divergence)
+line 6 seq 6 approve c2: {"verdict":"accepted","decision":"authorized"} -> {"verdict":"rejected","reason":"call_ended"}
+2 of 8 events changed

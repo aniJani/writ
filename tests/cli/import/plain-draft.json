@@ -1,0 +1,33 @@
+{
+  "writ": "0.1",
+  "extends": [
+    "../../../schema/presets/mcp-annotations.json"
+  ],
+  "approver_roles": [
+    "owner"
+  ],
+  "actions": {
+    "calendar.list": {
+      "labels": {
+        "read_only": "false",
+        "destructive": "true",
+        "idempotent": "false",
+        "open_world": "true"
+      },
+      "source": {
+        "tool_digest": "sha256:e89acb243e2f79436f30f283770c052302b31a228468ae44a5177cc6dceb3406"
+      }
+    },
+    "calendar.add": {
+      "labels": {
+        "read_only": "false",
+        "destructive": "true",
+        "idempotent": "false",
+        "open_world": "true"
+      },
+      "source": {
+        "tool_digest": "sha256:2e804a453a59e122f0e4be967c273e94101590981b9a80c47c4063ddc54aa380"
+      }
+    }
+  }
+}

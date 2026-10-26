@@ -1,0 +1,8 @@
+{
+  "writ": "0.1",
+  "approver_roles": ["approver"],
+  "actions": {
+    "payments.refund": { "consent": "per_call", "approval_ttl_ms": 3600000, "idempotent": true, "retry_after_unknown": false, "max_attempts": 1 },
+    "docs.read": {}
+  }
+}

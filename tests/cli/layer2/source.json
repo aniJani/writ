@@ -1,0 +1,23 @@
+{
+  "writ": "0.1",
+  "extends": ["source-org.json"],
+  "approver_roles": ["owner"],
+  "limits": { "approval_ttl_ms": 600000 },
+  "labels": { "risk": { "order": ["read", "write"] } },
+  "rules": [{ "when": { "risk": ">=write" }, "require": { "consent": "per_call" } }],
+  "actions": {
+    "files.delete": {
+      "labels": { "risk": "write" },
+      "source": {
+        "tool_digest": "sha256:6e472b0ed3adaa1a2079d529091335a014dec97478cc7c19fbf7a39c88a4eea0",
+        "server": "files",
+        "annotations": { "title": "Delete file", "readOnlyHint": false, "destructiveHint": true, "idempotentHint": true, "openWorldHint": false }
+      }
+    },
+    "files.search": {
+      "labels": { "risk": "read" },
+      "permission": "files.read",
+      "source": { "tool_digest": "sha256:c8ac215377964c0da7282b238ffa2fcf97af0cfa4347e7bc9d87c42653577311", "tool": "files.search", "server": "files" }
+    }
+  }
+}

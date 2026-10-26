@@ -1,0 +1,29 @@
+trace mcp-gateway/rate-limit-window: A gateway session with no turns or step limits; github.search draws on a principal calls meter capped at 3 per rolling minute. Two calls run; the third and fourth are both allowed at propose while one slot is left, the third claims it and the fourth's dispatch is refused meter_exceeded. A fifth propose with the meter full is denied meter_exceeded. Once the first call's entry leaves the window, the fourth call's dispatch is claimed.
+  0 session_start -> accepted none
+  1 propose call_id=c1 tool=github.search -> accepted allowed
+  2 dispatch call_id=c1 -> accepted dispatch_claimed
+  3 result call_id=c1 outcome=succeeded -> accepted none
+  4 propose call_id=c2 tool=github.search -> accepted allowed
+  5 dispatch call_id=c2 -> accepted dispatch_claimed
+  6 result call_id=c2 outcome=succeeded -> accepted none
+  7 propose call_id=c3 tool=github.search -> accepted allowed
+  8 propose call_id=c4 tool=github.search -> accepted allowed
+  9 dispatch call_id=c3 -> accepted dispatch_claimed
+  10 dispatch call_id=c4 -> rejected (reason meter_exceeded, retry after_user_action): This would go over a spending or usage limit.
+  11 result call_id=c3 outcome=succeeded -> accepted none
+  12 propose call_id=c5 tool=github.search -> accepted denied (reason meter_exceeded, retry after_user_action): This would go over a spending or usage limit.
+  13 dispatch call_id=c4 -> accepted dispatch_claimed
+  14 result call_id=c4 outcome=succeeded -> accepted none
+trace mcp-gateway/double-spend-session-a: Session a of principal u1 buys credits for 1000 and then 4000 against a 5000 per day principal meter, writing the ledger back after each step. Its final ledger is what session b syncs to.
+  0 session_start -> accepted none
+  1 propose call_id=c1 tool=credits.buy -> accepted allowed
+  2 dispatch call_id=c1 -> accepted dispatch_claimed
+  3 result call_id=c1 outcome=succeeded -> accepted none
+  4 propose call_id=c2 tool=credits.buy -> accepted allowed
+  5 dispatch call_id=c2 -> accepted dispatch_claimed
+  6 result call_id=c2 outcome=succeeded -> accepted none
+trace mcp-gateway/double-spend-session-b: Session b of the same principal started from session a's ledger after a's first purchase (version 3, 1000 spent) and proposes 3000. Its first dispatch fitted the stale ledger but the compare-and-swap on the ledger version failed (a had stored version 6), so the binding discarded that step, sent ledger_sync with the stored ledger and retried: the retried dispatch is refused meter_exceeded, so the principal never spends 8000 of a 5000 cap.
+  0 session_start -> accepted none
+  1 propose call_id=c1 tool=credits.buy -> accepted allowed
+  2 ledger_sync -> accepted none
+  3 dispatch call_id=c1 -> rejected (reason meter_exceeded, retry after_user_action): This would go over a spending or usage limit.

@@ -1,0 +1,3 @@
+args: diff tests/cli/diff/old.json tests/cli/diff/tight.json tests/cli/diff/bad-decode.jsonl
+exit: 2
+stderr: error: tests/cli/diff/bad-decode.jsonl: line 3: seq: missing field

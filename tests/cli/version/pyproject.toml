@@ -1,0 +1,10 @@
+[build-system]
+requires = ["hatchling>=1.27"]
+
+[project]
+name = "writ-kernel"
+version = "1.2.3a4"
+dependencies = ["wasmtime==49.0.0"]
+
+[tool.example]
+version = "9.9.9"

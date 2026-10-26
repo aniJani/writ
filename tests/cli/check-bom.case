@@ -1,0 +1,3 @@
+args: check tests/cli/policies/bom.json
+exit: 2
+stderr: error: tests/cli/policies/bom.json: byte order mark at start of input is not allowed

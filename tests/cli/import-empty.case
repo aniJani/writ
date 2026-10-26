@@ -1,0 +1,3 @@
+args: import mcp tests/cli/import/empty.json
+exit: 2
+stderr: error: tests/cli/import/empty.json: no tools

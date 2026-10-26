@@ -1,0 +1,3 @@
+args: digest tests/cli/layer2/team.json
+exit: 2
+stderr: error: tests/cli/layer2/team.json: a layer-2 policy

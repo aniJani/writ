@@ -1,0 +1,2 @@
+error: cannot read extended policy "tests/cli/layer2/nope.json" (extends chain: tests/cli/layer2/missing-parent.json -> tests/cli/layer2/nope.json)
+1 error

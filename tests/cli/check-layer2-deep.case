@@ -1,0 +1,2 @@
+args: check tests/cli/layer2/deep/d0.json
+exit: 1

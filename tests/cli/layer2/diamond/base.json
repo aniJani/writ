@@ -1,0 +1,8 @@
+{
+  "writ": "0.1",
+  "labels": { "risk": { "order": ["low", "high"] } },
+  "rules": [
+    { "when": { "risk": ">=high" }, "require": { "consent": "per_call" } }
+  ],
+  "actions": { "notes.delete": {} }
+}

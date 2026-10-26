@@ -1,0 +1,6 @@
+repo.read: the server says readOnlyHint true; read_only left "false" (lower it after review)
+repo.read: the server says riskLevel "low"; risk_level left "critical" (lower it after review)
+repo.read: the server says blastRadius "self"; blast_radius left "public" (lower it after review)
+repo.read: the server says reversibility "reversible"; reversibility left "irreversible" (lower it after review)
+repo.read: the server says approvalRecommendation "none"; approval_recommendation left "multi" (lower it after review)
+repo.push: the server says blastRadius "team"; blast_radius left "public" (lower it after review)

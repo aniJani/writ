@@ -1,0 +1,278 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "writ.policy-0.1.schema.json",
+  "title": "Writ policy 0.1",
+  "description": "A Writ policy document. Layer 1 is what the kernel runs; the optional layer-2 fields (extends, labels, rules and action labels) are expanded to layer 1 by `writ expand`. The decoders in Writ/Codec/Policy.lean and Writ/Codec/Layer2.lean are the source of truth; checks that need several fields at once (unknown meters, unknown roles, zero quorums, undeclared label dimensions) are reported by `writ check`, not by this schema.",
+  "type": "object",
+  "required": ["writ"],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": { "type": "string" },
+    "writ": { "const": "0.1", "description": "Policy format version." },
+    "mode": { "$ref": "#/$defs/mode" },
+    "approver_roles": { "$ref": "#/$defs/strings", "description": "Every role a consent clause may name." },
+    "escalation_roles": { "$ref": "#/$defs/strings", "description": "Roles allowed to acknowledge an escalation. Must be approver roles." },
+    "meters": {
+      "type": "object",
+      "description": "Meters by name.",
+      "additionalProperties": { "$ref": "#/$defs/meter" }
+    },
+    "limits": { "$ref": "#/$defs/limits" },
+    "actions": {
+      "type": "object",
+      "description": "Tools by name. A tool that is not listed is denied.",
+      "additionalProperties": { "$ref": "#/$defs/requirements" }
+    },
+    "binding": {
+      "enum": ["mutable", "immutable"],
+      "default": "mutable",
+      "description": "With immutable, approvers may not edit a call's arguments (edit_not_allowed)."
+    },
+    "kill_scope": {
+      "enum": ["session", "principal"],
+      "default": "session",
+      "description": "With principal, a kill also sets the principal tombstone in the ledger."
+    },
+    "extends": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "description": "Layer 2. Paths of policy files whose rules and actions this policy joins, relative to this file's directory."
+    },
+    "labels": {
+      "type": "object",
+      "description": "Layer 2. Label dimensions by name.",
+      "additionalProperties": { "$ref": "#/$defs/labelDimension" }
+    },
+    "rules": {
+      "type": "array",
+      "description": "Layer 2. Each matching rule's requirements are joined into an action.",
+      "items": { "$ref": "#/$defs/rule" }
+    }
+  },
+  "$defs": {
+    "nat": { "type": "integer", "minimum": 0, "maximum": 9007199254740991 },
+    "strings": { "type": "array", "items": { "type": "string" } },
+    "amount": {
+      "type": "string",
+      "pattern": "^(0|[1-9][0-9]*)$",
+      "maxLength": 78,
+      "description": "A decimal string with no sign, no leading zero and no spaces, at most 78 digits."
+    },
+    "mode": { "enum": ["enforce", "log_only"], "default": "enforce" },
+    "cost": {
+      "type": "object",
+      "required": ["amount", "currency"],
+      "additionalProperties": false,
+      "properties": {
+        "amount": { "$ref": "#/$defs/amount" },
+        "currency": { "type": "string" }
+      }
+    },
+    "clause": {
+      "type": "object",
+      "required": ["quorum"],
+      "additionalProperties": false,
+      "properties": {
+        "quorum": { "$ref": "#/$defs/nat", "description": "Approvals needed from this clause. 0 is refused by `writ check`." },
+        "roles": { "$ref": "#/$defs/strings", "description": "Roles that count. Omitted means any approver." },
+        "human_only": { "type": "boolean", "default": true },
+        "exclude_requester": { "type": "boolean", "default": false }
+      }
+    },
+    "group": {
+      "type": "object",
+      "required": ["all"],
+      "additionalProperties": false,
+      "properties": {
+        "all": { "type": "array", "items": { "$ref": "#/$defs/clause" } },
+        "distinct": { "type": "boolean", "default": false, "description": "One person may fill only one clause of the group." }
+      }
+    },
+    "consent": {
+      "description": "none, per_call (one human approval), a clause, a group of clauses, or several groups.",
+      "oneOf": [
+        { "const": "none" },
+        { "const": "per_call" },
+        { "$ref": "#/$defs/clause" },
+        { "$ref": "#/$defs/group" },
+        {
+          "type": "object",
+          "required": ["groups"],
+          "additionalProperties": false,
+          "properties": {
+            "groups": { "type": "array", "items": { "$ref": "#/$defs/group" } }
+          }
+        }
+      ]
+    },
+    "escalator": {
+      "type": "object",
+      "required": ["consent"],
+      "additionalProperties": false,
+      "properties": {
+        "consent": { "$ref": "#/$defs/consent" },
+        "grantable": { "type": "boolean", "default": false }
+      }
+    },
+    "grantable": {
+      "type": "object",
+      "required": ["scope", "max_uses"],
+      "additionalProperties": false,
+      "properties": {
+        "scope": { "enum": ["turn", "session"] },
+        "max_uses": { "$ref": "#/$defs/nat" },
+        "max_duration_ms": { "$ref": "#/$defs/nat" },
+        "any_args": { "type": "boolean", "default": false },
+        "allow_any_args_metered": { "type": "boolean", "default": false }
+      }
+    },
+    "requirements": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "permission": { "type": ["string", "null"], "description": "Permission the session must hold. Omitted or null means none is needed." },
+        "consent": { "$ref": "#/$defs/consent", "default": "none" },
+        "consent_if_cost_over": { "$ref": "#/$defs/cost", "description": "The action's own consent is waived when the call's cost is strictly below this amount in the same currency, and applies otherwise. Escalator consent still joins. Has no effect when consent is none." },
+        "escalate": {
+          "type": "object",
+          "description": "Escalators by name. The host reports which ones fire on each propose.",
+          "additionalProperties": { "$ref": "#/$defs/escalator" }
+        },
+        "grantable": { "$ref": "#/$defs/grantable" },
+        "idempotent": { "type": "boolean", "default": false },
+        "retry_after_unknown": { "type": "boolean", "default": false },
+        "max_attempts": { "$ref": "#/$defs/nat", "default": 1 },
+        "guards": { "$ref": "#/$defs/strings", "description": "Guard names the host must report as true at propose and dispatch." },
+        "meters": { "$ref": "#/$defs/strings", "description": "Names from the policy's meters." },
+        "approval_ttl_ms": { "$ref": "#/$defs/nat" },
+        "authorized_ttl_ms": { "$ref": "#/$defs/nat" },
+        "exposed": { "type": "boolean", "default": true },
+        "mode": { "$ref": "#/$defs/mode" },
+        "flags": {
+          "type": "array",
+          "items": { "enum": ["reads_private", "ingests_untrusted", "sends_external"] }
+        },
+        "labels": {
+          "type": "object",
+          "description": "Layer 2. A value per label dimension. A declared dimension left out takes its strictest (last) value.",
+          "additionalProperties": { "type": "string" }
+        },
+        "review": { "type": "object", "description": "Host display hints. Accepted and ignored by the kernel." },
+        "source": {
+          "type": "object",
+          "description": "The MCP tool this action was written for. Accepted and ignored by the kernel; writ check --tools compares tool_digest with the server's current tool list.",
+          "required": ["tool_digest"],
+          "additionalProperties": false,
+          "properties": {
+            "tool_digest": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$", "description": "The writ-tool-v1 digest of the tool definition." },
+            "server": { "type": "string", "description": "The server that lists the tool. At most 512 UTF-8 bytes." },
+            "tool": { "type": "string", "description": "The tool's name on the server, when it differs from the action name. At most 512 UTF-8 bytes." },
+            "annotations": { "type": "object", "description": "The server's annotations, recorded verbatim for the author to review. Untrusted, and not applied." }
+          }
+        },
+        "messages": {
+          "type": "object",
+          "description": "Per-reason message overrides for the host binding. Validated but not stored or applied in 0.1.",
+          "propertyNames": { "enum": ["not_started", "already_started", "session_ended", "stale_seq", "time_decreasing", "state_version_mismatch", "policy_digest_mismatch", "duplicate_call", "unknown_call", "stale_request", "unknown_approver", "call_awaiting", "call_authorized", "call_dispatched", "call_unknown", "call_ended", "already_reconciled", "retry_not_allowed", "not_escalated", "approver_changed", "approver_not_eligible", "already_approved", "digest_mismatch", "cost_mismatch", "edit_not_allowed", "duplicate_grant", "unknown_grant", "grant_not_allowed", "attempt_order", "idempotency_key_mismatch", "attempt_limit", "turn_state", "killed", "escalated", "unknown_tool", "not_exposed", "proposal_limit", "step_limit", "permission_missing", "guard_false", "cost_missing", "currency_mismatch", "cost_above_per_call", "meter_exceeded", "previously_rejected", "approval_budget", "approval_expired", "authorization_expired", "grant_invalid", "ledger_conflict", "session_proposal_limit", "session_approval_budget"] },
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": { "model": { "type": "string" }, "user": { "type": "string" } }
+          }
+        }
+      }
+    },
+    "labelDimension": {
+      "type": "object",
+      "required": ["order"],
+      "additionalProperties": false,
+      "properties": {
+        "order": {
+          "type": "array",
+          "items": { "type": "string" },
+          "minItems": 1,
+          "uniqueItems": true,
+          "description": "The dimension's values, least to most risky."
+        }
+      }
+    },
+    "rule": {
+      "type": "object",
+      "required": ["when", "require"],
+      "additionalProperties": false,
+      "properties": {
+        "when": {
+          "type": "object",
+          "description": "Dimension to \">=value\". The rule matches when every listed dimension is at that value or above; {} matches every action.",
+          "additionalProperties": { "type": "string", "pattern": "^>=[\\s\\S]" }
+        },
+        "require": { "$ref": "#/$defs/require" }
+      }
+    },
+    "require": {
+      "type": "object",
+      "description": "The strictness-ordered fields a rule may set.",
+      "additionalProperties": false,
+      "properties": {
+        "consent": { "$ref": "#/$defs/consent" },
+        "grantable": {
+          "description": "A limit: null forbids grantable, an object caps the action's own grantable. A rule never makes an action grantable.",
+          "oneOf": [
+            { "type": "null" },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "scope": { "enum": ["turn", "session"] },
+                "max_uses": { "$ref": "#/$defs/nat" },
+                "max_duration_ms": { "$ref": "#/$defs/nat" },
+                "any_args": { "type": "boolean" }
+              }
+            }
+          ]
+        },
+        "exposed": { "type": "boolean" },
+        "idempotent": { "type": "boolean" },
+        "retry_after_unknown": { "type": "boolean" },
+        "guards": { "$ref": "#/$defs/strings" },
+        "flags": {
+          "type": "array",
+          "items": { "enum": ["reads_private", "ingests_untrusted", "sends_external"] }
+        },
+        "mode": { "enum": ["enforce", "log_only"] }
+      }
+    },
+    "meter": {
+      "type": "object",
+      "additionalProperties": false,
+      "oneOf": [
+        { "required": ["currency"] },
+        { "required": ["unit"] }
+      ],
+      "properties": {
+        "currency": { "type": "string", "description": "A money meter in this currency." },
+        "unit": { "const": "calls", "description": "A meter that counts calls." },
+        "cap": { "$ref": "#/$defs/nat", "description": "A JSON integer, not an amount string." },
+        "scope": { "enum": ["session", "principal"], "default": "session" },
+        "window_ms": { "$ref": "#/$defs/nat", "description": "Rolling window. 0 is refused by `writ check`." },
+        "max_per_call": { "$ref": "#/$defs/nat", "description": "Money meters only. A JSON integer, not an amount string." }
+      }
+    },
+    "limits": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "max_steps_per_turn": { "$ref": "#/$defs/nat" },
+        "max_proposals_per_turn": { "$ref": "#/$defs/nat" },
+        "max_approval_requests_per_turn": { "$ref": "#/$defs/nat" },
+        "max_proposals_per_session": { "$ref": "#/$defs/nat" },
+        "max_approval_requests_per_session": { "$ref": "#/$defs/nat" },
+        "max_consecutive_failures": { "$ref": "#/$defs/nat" },
+        "max_failures_per_session": { "$ref": "#/$defs/nat" },
+        "escalation_scope": { "enum": ["session", "tool"], "default": "session" },
+        "approval_ttl_ms": { "$ref": "#/$defs/nat" },
+        "authorized_ttl_ms": { "$ref": "#/$defs/nat" }
+      }
+    }
+  }
+}

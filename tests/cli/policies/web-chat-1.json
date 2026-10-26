@@ -1,0 +1,1 @@
+{"writ":"0.1","approver_roles":["owner"],"limits":{"max_steps_per_turn":4,"max_proposals_per_turn":12,"max_consecutive_failures":2},"actions":{"search.web":{"consent":"none"},"calendar.list":{"permission":"calendar.read","consent":"none"},"email.send":{"permission":"email.send","consent":"per_call","flags":["sends_external"]}}}

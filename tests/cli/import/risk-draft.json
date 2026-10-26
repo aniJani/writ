@@ -1,0 +1,69 @@
+{
+  "writ": "0.1",
+  "extends": [
+    "../../../schema/presets/mcp-annotations.json",
+    "../../../schema/presets/mcp-risk-metadata.json"
+  ],
+  "approver_roles": [
+    "owner"
+  ],
+  "actions": {
+    "repo.read": {
+      "labels": {
+        "read_only": "false",
+        "destructive": "true",
+        "idempotent": "false",
+        "open_world": "true",
+        "risk_level": "critical",
+        "blast_radius": "public",
+        "reversibility": "irreversible",
+        "approval_recommendation": "multi"
+      },
+      "source": {
+        "tool_digest": "sha256:2b7a7299facf74b1f559a07175b3bb850113ff26a09b508c8b92ef0a008745e0",
+        "annotations": {
+          "readOnlyHint": true,
+          "riskLevel": "low",
+          "blastRadius": "self",
+          "reversibility": "reversible",
+          "approvalRecommendation": "none"
+        }
+      }
+    },
+    "repo.push": {
+      "labels": {
+        "read_only": "false",
+        "destructive": "true",
+        "idempotent": "false",
+        "open_world": "true",
+        "risk_level": "critical",
+        "blast_radius": "public",
+        "reversibility": "irreversible",
+        "approval_recommendation": "multi"
+      },
+      "source": {
+        "tool_digest": "sha256:3d5115f986c1f4c1203089a0d70142d87e41e9a695ee1041d72f34c12fe2b362",
+        "annotations": {
+          "riskLevel": "critical",
+          "blastRadius": "team",
+          "approvalRecommendation": "multi"
+        }
+      }
+    },
+    "repo.status": {
+      "labels": {
+        "read_only": "false",
+        "destructive": "true",
+        "idempotent": "false",
+        "open_world": "true",
+        "risk_level": "critical",
+        "blast_radius": "public",
+        "reversibility": "irreversible",
+        "approval_recommendation": "multi"
+      },
+      "source": {
+        "tool_digest": "sha256:47861936fe738935ad22ef3b0b266eec4a8a1d8c85c8b2c97e2c5cd53d9f2edc"
+      }
+    }
+  }
+}

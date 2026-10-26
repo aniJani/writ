@@ -1,0 +1,83 @@
+name = "writ"
+version = "0.1.0-preview.1"
+defaultTargets = ["Writ", "WritSpec", "WritTests", "WritCli", "WritProofs", "writ"]
+
+[[lean_lib]]
+name = "Writ"
+
+[[lean_lib]]
+name = "WritSpec"
+
+[[lean_lib]]
+name = "WritTests"
+# include_str is not tracked by Lake, so the corpus, the digest vectors, the sample policies, the presets, the CLI fixtures, the reason list, the SEP-2848 mapping, the profile vectors and the axiom pins are declared inputs of the test library.
+needs = ["corpus", "digests", "samples", "presets", "cli", "reasons", "sep2848", "profiles", "axioms"]
+
+[[input_dir]]
+name = "corpus"
+path = "corpus/examples"
+text = true
+filter = { extension = ["jsonl"] }
+
+[[input_dir]]
+name = "digests"
+path = "corpus/digests"
+text = true
+filter = { extension = ["jsonl"] }
+
+[[input_dir]]
+name = "samples"
+path = "schema/examples"
+text = true
+filter = { extension = ["json"] }
+
+[[input_dir]]
+name = "presets"
+path = "schema/presets"
+text = true
+filter = { extension = ["json"] }
+
+[[input_file]]
+name = "reasons"
+path = "schema/reasons.json"
+text = true
+
+[[input_file]]
+name = "sep2848"
+path = "corpus/sep-2848.json"
+text = true
+
+[[input_dir]]
+name = "profiles"
+path = "corpus/profiles"
+text = true
+filter = { extension = ["jsonl"] }
+
+[[input_file]]
+name = "axioms"
+path = "WritProofs/Axioms.lean"
+text = true
+
+[[input_dir]]
+name = "cli"
+path = "tests/cli"
+text = false
+filter = { extension = ["json", "jsonl", "out"] }
+
+[[lean_lib]]
+name = "WritCli"
+
+[[lean_lib]]
+name = "WritProofs"
+leanOptions = { warningAsError = true }
+
+[[lean_exe]]
+name = "writ"
+root = "WritCli.Main"
+
+[[lean_exe]]
+name = "writ-fuzz"
+root = "WritTests.FuzzMain"
+
+[[lean_lib]]
+name = "WritWasm"

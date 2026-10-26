@@ -1,0 +1,12 @@
+{
+  "writ": "0.1",
+  "approver_roles": ["owner"],
+  "binding": "immutable",
+  "kill_scope": "principal",
+  "limits": { "approval_ttl_ms": 1000 },
+  "actions": {
+    "files.read": { "permission": "files.read" },
+    "email.send": { "permission": "email.send", "consent": "per_call", "guards": ["inbox_connected"] },
+    "files.wipe": { "exposed": false }
+  }
+}

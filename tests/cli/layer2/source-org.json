@@ -1,0 +1,9 @@
+{
+  "writ": "0.1",
+  "actions": {
+    "files.search": {
+      "permission": "files.read",
+      "source": { "tool_digest": "sha256:c8ac215377964c0da7282b238ffa2fcf97af0cfa4347e7bc9d87c42653577311", "server": "files", "tool": "files.search" }
+    }
+  }
+}

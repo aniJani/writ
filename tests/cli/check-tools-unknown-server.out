@@ -1,0 +1,3 @@
+warning: web.fetch: it allows tool "web.fetch" but its source is not for server "files", so this check cannot detect changes to the tool
+warning: notes.put: it allows tool "notes.put" but its source is not for server "files", so this check cannot detect changes to the tool
+0 errors, 2 warnings

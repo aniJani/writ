@@ -1,0 +1,41 @@
+name: CI
+
+# node build/wasm/smoke.mjs and the npm tests in packages/writ stay local: they need the WASM
+# kernel, which only the pinned emcc toolchain builds (scripts/build-wasm.sh).
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      # The installer script is pinned to the commit of elan's v4.2.4 release tag.
+      - name: Install elan
+        run: |
+          curl -sSfL https://raw.githubusercontent.com/leanprover/elan/227caca133724d5516bee25c2aeb3e609478f2d8/elan-init.sh \
+            | sh -s -- -y --default-toolchain "$(cat lean-toolchain)"
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+
+      - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: .lake
+          key: lake-${{ runner.os }}-${{ hashFiles('lake-manifest.json', 'lean-toolchain') }}-${{ github.sha }}
+          restore-keys: lake-${{ runner.os }}-${{ hashFiles('lake-manifest.json', 'lean-toolchain') }}-
+
+      - run: lake build
+      - run: scripts/cli-test.sh
+      - run: scripts/check-proofs.sh
+      - run: lake exe writ-fuzz --mutants
+      - run: lake exe writ-fuzz --traces 1000
+      - run: scripts/corpus.sh

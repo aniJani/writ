@@ -1,0 +1,5 @@
+error: files.search: the policy and the policies it extends set "source" to different values
+warning: files.search: tool "files.search" is not in the tool list
+warning: tool "web.fetch" is in the tool list but no action names it (by name or source.tool), so default deny refuses it
+warning: tool "notes.put" is in the tool list but no action names it (by name or source.tool), so default deny refuses it
+1 error, 3 warnings

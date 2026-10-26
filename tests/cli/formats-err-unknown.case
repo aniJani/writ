@@ -1,0 +1,3 @@
+args: check tests/cli/policies/formats-err-unknown.json
+exit: 2
+stderr: actions.buy.consnet: unknown field

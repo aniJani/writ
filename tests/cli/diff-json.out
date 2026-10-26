@@ -1,0 +1,3 @@
+{"line":4,"seq":4,"type":"propose","call_id":"c1","old":{"verdict":"accepted","decision":"allowed"},"new":{"verdict":"accepted","decision":"needs_approval","request_id":{"session":"s1","call":"c1","generation":0}}}
+{"line":5,"seq":5,"type":"dispatch","call_id":"c1","old":{"verdict":"accepted","decision":"dispatch_claimed"},"new":{"verdict":"rejected","reason":"call_awaiting","retry":"fix_request","message":"This call is still waiting for approval. Do not repeat it; wait for the approval decision."}}
+{"line":6,"seq":6,"type":"result","call_id":"c1","old":{"verdict":"accepted"},"new":{"verdict":"rejected","reason":"call_awaiting","retry":"fix_request","message":"This call is still waiting for approval. Do not repeat it; wait for the approval decision."}}

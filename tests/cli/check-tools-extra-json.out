@@ -1,0 +1,1 @@
+{"ok":true,"errors":[],"warnings":[{"code":"tool_unlisted","message":"tool \"shell.exec\" is in the tool list but no action names it (by name or source.tool), so default deny refuses it"}],"policy_digest":"sha256:1dc14df58654ddf6ecef1e1f410e75f17c64d3d29656884e1a6a571159a22913"}

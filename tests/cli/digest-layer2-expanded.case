@@ -1,0 +1,2 @@
+args: digest tests/cli/layer2/team.expanded.json
+exit: 0

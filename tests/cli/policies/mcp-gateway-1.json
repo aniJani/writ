@@ -1,0 +1,1 @@
+{"writ":"0.1","meters":{"calls_per_min":{"unit":"calls","cap":3,"scope":"principal","window_ms":60000},"usd_day":{"currency":"USD","cap":5000,"scope":"principal","window_ms":86400000}},"actions":{"github.search":{"consent":"none","meters":["calls_per_min"]},"credits.buy":{"consent":"none","meters":["usd_day"]}}}

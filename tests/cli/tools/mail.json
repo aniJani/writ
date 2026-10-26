@@ -1,0 +1,1 @@
+[{ "name": "mail.send", "description": "Send an email.", "inputSchema": { "type": "object", "properties": { "to": { "type": "string" }, "body": { "type": "string" } } } }]

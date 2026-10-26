@@ -1,0 +1,1 @@
+{"actions":{"notes.delete":{"consent":"per_call"},"notes.edit":{"guards":["owner_present"]},"notes.read":{},"notes.share":{"flags":["sends_external"]}},"approver_roles":["owner"],"limits":{"approval_ttl_ms":600000},"writ":"0.1"}

@@ -1,0 +1,4 @@
+{"verdict":"accepted","state_version":1}
+{"verdict":"accepted","state_version":2}
+{"error":"line is not valid UTF-8"}
+{"verdict":"accepted","state_version":3}

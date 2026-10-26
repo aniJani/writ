@@ -1,0 +1,26 @@
+{
+  "writ": "0.1",
+  "approver_roles": ["owner"],
+  "limits": { "approval_ttl_ms": 1000 },
+  "meters": {
+    "usd_session": { "currency": "USD", "cap": 5, "scope": "session", "max_per_call": 3 },
+    "eur_day": { "currency": "EUR", "cap": 1, "scope": "principal", "window_ms": 1000 },
+    "calls_minute": { "unit": "calls", "cap": 1, "scope": "principal", "window_ms": 100 }
+  },
+  "actions": {
+    "shop.buy": {
+      "consent": "per_call",
+      "consent_if_cost_over": { "amount": "2", "currency": "USD" },
+      "meters": ["usd_session"],
+      "grantable": {
+        "scope": "session",
+        "max_uses": 2,
+        "max_duration_ms": 500,
+        "any_args": true,
+        "allow_any_args_metered": true
+      }
+    },
+    "eu.pay": { "meters": ["eur_day"] },
+    "search.web": { "meters": ["calls_minute"] }
+  }
+}

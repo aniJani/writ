@@ -1,0 +1,22 @@
+{
+  "writ": "0.1",
+  "extends": ["../../../schema/presets/axes.json", "../../../schema/presets/mcp-risk-metadata.json"],
+  "approver_roles": ["owner", "admin"],
+  "limits": { "approval_ttl_ms": 600000 },
+  "actions": {
+    "doc.edit": {
+      "labels": {
+        "effect": "write", "reversibility": "partially", "audience": "internal", "value": "low", "data": "internal",
+        "risk_level": "medium", "blast_radius": "team", "approval_recommendation": "single"
+      },
+      "grantable": { "scope": "session", "max_uses": 3 }
+    },
+    "repo.delete": {
+      "labels": {
+        "effect": "delete", "reversibility": "irreversible", "audience": "internal", "value": "low", "data": "internal",
+        "risk_level": "high", "blast_radius": "org", "approval_recommendation": "multi"
+      },
+      "grantable": { "scope": "turn", "max_uses": 3 }
+    }
+  }
+}

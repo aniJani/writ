@@ -1,0 +1,3 @@
+args: check tests/cli/tools/policy.json --tools tests/cli/tools/policy.json
+exit: 2
+stderr: error: tests/cli/tools/policy.json: tools: missing field

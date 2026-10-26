@@ -1,0 +1,23 @@
+trace coding-agent/kill-stops-everything: With one command running, one authorized but not yet started, and one waiting for approval, the developer hits kill. The running command is aborted and reported declined; the authorized call and the pending approval are cancelled by the kill, and its dispatch and the late approval are rejected killed; a repeat of the cancelled call and every new proposal are denied killed.
+  0 session_start -> accepted none
+  1 turn_start -> accepted none
+  2 step_start -> accepted none
+  3 propose call_id=c1 tool=shell.run -> accepted allowed
+  4 dispatch call_id=c1 -> accepted dispatch_claimed
+  5 propose call_id=c2 tool=shell.run -> accepted allowed
+  6 propose call_id=c3 tool=shell.run -> accepted needs_approval
+      envelope {"reason":"insufficient_authorization","remediation":"available","remediationHints":[{"type":"task"}],"requestId":{"session":"s1","call":"c3","generation":0}}
+  7 kill -> accepted none
+      disposition call_id=c2 cancelled
+      disposition call_id=c3 cancelled
+  8 result call_id=c1 outcome=declined -> accepted none
+      disposition call_id=c1 denied-not-executed
+  9 dispatch call_id=c2 -> rejected (reason killed, retry never): This session was stopped.
+      envelope {"reason":"insufficient_authorization","remediation":"unavailable","code":"killed","retry":"never","message":"The session has been stopped. Do not retry this or any other call."}
+  10 approve call_id=c3 approver=dev -> rejected (reason killed, retry never): This session was stopped.
+      envelope {"reason":"insufficient_authorization","remediation":"unavailable","code":"killed","retry":"never","message":"The session has been stopped. Do not retry this or any other call."}
+  11 propose call_id=c2 tool=shell.run -> accepted denied (reason killed, retry never): This session was stopped.
+      envelope {"reason":"insufficient_authorization","remediation":"unavailable","code":"killed","retry":"never","message":"The session has been stopped. Do not retry this or any other call."}
+  12 propose call_id=c4 tool=shell.run -> accepted denied (reason killed, retry never): This session was stopped.
+      disposition call_id=c4 denied-not-executed
+      envelope {"reason":"insufficient_authorization","remediation":"unavailable","code":"killed","retry":"never","message":"The session has been stopped. Do not retry this or any other call."}

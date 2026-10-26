@@ -1,0 +1,3 @@
+args: import openapi tests/cli/import/plain.json
+exit: 2
+stderr: error: unknown source openapi, expected mcp

@@ -1,0 +1,9 @@
+{
+  "writ": "0.1",
+  "approver_roles": ["owner", "oncall"],
+  "escalation_roles": ["oncall"],
+  "limits": { "max_consecutive_failures": 1, "escalation_scope": "tool" },
+  "actions": {
+    "deploy.run": {}
+  }
+}

@@ -1,0 +1,2 @@
+args: check --json tests/cli/tools/policy.json --server web --tools tests/cli/tools/web-extra.json
+exit: 0

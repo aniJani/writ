@@ -1,0 +1,2 @@
+args: check tests/cli/policies/formats-err-warn.json --json
+exit: 0

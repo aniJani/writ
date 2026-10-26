@@ -1,0 +1,2 @@
+args: check tests/cli/layer2/team.json --json
+exit: 0

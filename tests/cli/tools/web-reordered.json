@@ -1,0 +1,5 @@
+{"nextCursor":null,"tools":[
+{"inputSchema":{"required":["url"],"properties":{"headers":{"additionalProperties":{"type":"string"},"type":"object"},"timeout":{"default":10,"maximum":30,"minimum":5e-1,"type":"number"},"url":{"format":"uri","type":"string"}},"type":"object"},
+ "annotations":{"openWorldHint":true,"readOnlyHint":true},
+ "description":"Fetch a URL and return its text. R\u00e9sum\u00e9: \u201cquotes\u201d and 日本語 kept.","title":"Fetch a page","name":"web.fetch"},
+{"inputSchema":{"properties":{"text":{"maxLength":1e4,"type":"string"}},"type":"object"},"description":"Save a note.","name":"notes.put"}]}

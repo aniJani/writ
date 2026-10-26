@@ -1,0 +1,16 @@
+usage: writ <command> [args]
+
+commands:
+  check <policy.json> [...]      check a policy for errors and warnings, and changed tools
+  expand <policy.json> [--out f] print a layer-2 policy as the layer-1 policy it expands to
+  digest <policy.json>           print the policy digest
+  import mcp <tools.json> [...]  draft a layer-2 policy from an MCP tool list
+  replay <traces.jsonl>...       replay traces against their expectations
+  oracle <policy.json> [...]     step the kernel over events read from stdin
+  explain <traces.jsonl> [...]   describe each step of a trace
+  diff <old> <new> <jsonl> [...] replay events under two policies and list changed verdicts
+  traces <policy.json> [...]     emit the shortest trace for every abstract transition
+
+options:
+  --help      show this help (also: writ <command> --help)
+  --version   show the version

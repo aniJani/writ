@@ -1,0 +1,2 @@
+args: check tests/cli/layer2/source-conflict.json --tools tests/cli/tools/web.json
+exit: 1

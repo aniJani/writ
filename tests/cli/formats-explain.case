@@ -1,0 +1,2 @@
+args: explain tests/cli/traces/formats-shop.jsonl
+exit: 0

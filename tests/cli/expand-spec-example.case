@@ -1,0 +1,2 @@
+args: expand tests/cli/layer2/spec-example.json
+exit: 0

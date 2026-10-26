@@ -1,0 +1,2 @@
+args: expand tests/cli/layer2/missing-parent.json
+exit: 1

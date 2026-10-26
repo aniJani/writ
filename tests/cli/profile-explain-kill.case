@@ -1,0 +1,2 @@
+args: explain corpus/examples/coding-agent.jsonl --profile mcp-tool-approval --id coding-agent/kill-stops-everything
+exit: 0

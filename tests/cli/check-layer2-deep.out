@@ -1,0 +1,2 @@
+error: extends is nested more than 8 files deep (extends chain: tests/cli/layer2/deep/d0.json -> tests/cli/layer2/deep/d1.json -> tests/cli/layer2/deep/d2.json -> tests/cli/layer2/deep/d3.json -> tests/cli/layer2/deep/d4.json -> tests/cli/layer2/deep/d5.json -> tests/cli/layer2/deep/d6.json -> tests/cli/layer2/deep/d7.json -> tests/cli/layer2/deep/d8.json -> tests/cli/layer2/deep/d9.json)
+1 error, 0 warnings

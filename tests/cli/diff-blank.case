@@ -1,0 +1,2 @@
+args: diff tests/cli/diff/old.json tests/cli/diff/tight.json tests/cli/diff/blank.jsonl
+exit: 0

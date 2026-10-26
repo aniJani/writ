@@ -1,0 +1,30 @@
+{
+  "writ": "0.1",
+  "approver_roles": ["owner", "finance"],
+  "limits": { "approval_ttl_ms": 1000 },
+  "actions": {
+    "wire.send": {
+      "consent": {
+        "groups": [
+          { "all": [{ "quorum": 2 }] },
+          { "all": [{ "quorum": 1, "roles": ["finance"], "human_only": false }] }
+        ]
+      }
+    },
+    "vendor.pay": {
+      "consent": {
+        "all": [
+          { "quorum": 1, "roles": ["owner"], "exclude_requester": true },
+          { "quorum": 1, "roles": ["finance"], "human_only": false }
+        ],
+        "distinct": true
+      }
+    },
+    "shell.run": {
+      "grantable": { "scope": "turn", "max_uses": 1 },
+      "escalate": {
+        "dangerous": { "consent": { "quorum": 1, "roles": ["owner"], "human_only": true }, "grantable": true }
+      }
+    }
+  }
+}

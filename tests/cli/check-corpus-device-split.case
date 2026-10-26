@@ -1,0 +1,2 @@
+args: check tests/cli/policies/device-split-1.json
+exit: 0

@@ -1,0 +1,2 @@
+args: check tests/cli/policies/profile-l2.json --profile mcp-tool-approval
+exit: 1

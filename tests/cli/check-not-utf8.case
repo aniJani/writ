@@ -1,0 +1,3 @@
+args: check @TMP@/not-utf8.json
+exit: 2
+stderr: not-utf8.json: not valid UTF-8

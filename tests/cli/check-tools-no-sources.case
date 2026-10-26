@@ -1,0 +1,2 @@
+args: check tests/cli/tools/nosource.json --tools tests/cli/tools/web-extra.json
+exit: 0

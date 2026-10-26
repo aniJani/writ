@@ -1,0 +1,4 @@
+args: traces tests/cli/traces/tiny.json --depth 0 --out @TMP@/generated
+exit: 0
+stderr: states 3, traces 28 (accepted 2, rejected 26), depth 0
+outfile: @TMP@/generated/tiny.jsonl tests/cli/traces-stdout.out

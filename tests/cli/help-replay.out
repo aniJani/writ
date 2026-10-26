@@ -1,0 +1,9 @@
+usage: writ replay <traces.jsonl>... [--coverage]
+
+Replay every trace and compare each step with its expected fields.
+Prints ok <id> or FAIL <id> step <i>: <mismatch>, then a summary line.
+  --coverage   add a last line {"reasons":[...],"decisions":[...]}: every reason code and
+               decision in the verdicts the replay gave, sorted, each once (reasons include
+               rejections, denied and dispatch_denied decisions, existing statuses and would_deny)
+
+Exit 0 when all traces match, 1 when any fails, 2 when a file cannot be read or parsed.

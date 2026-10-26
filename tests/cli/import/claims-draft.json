@@ -1,0 +1,60 @@
+{
+  "writ": "0.1",
+  "extends": [
+    "../../../schema/presets/mcp-annotations.json"
+  ],
+  "approver_roles": [
+    "owner"
+  ],
+  "actions": {
+    "web.fetch": {
+      "labels": {
+        "read_only": "false",
+        "destructive": "true",
+        "idempotent": "false",
+        "open_world": "true"
+      },
+      "source": {
+        "tool_digest": "sha256:21c3fdd0a03683d2d85f985cb8da0ec3e4c9821a72531bfbb61e909eab2b0268",
+        "annotations": {
+          "title": "Fetch a page",
+          "readOnlyHint": true,
+          "openWorldHint": true
+        }
+      }
+    },
+    "notes.put": {
+      "labels": {
+        "read_only": "false",
+        "destructive": "true",
+        "idempotent": "false",
+        "open_world": "true"
+      },
+      "source": {
+        "tool_digest": "sha256:dd3003e5e1496ac1ebbc3785db219c3d102dbaf2882f1e295e63785045fa4eb5",
+        "annotations": {
+          "readOnlyHint": false,
+          "destructiveHint": false,
+          "idempotentHint": true,
+          "openWorldHint": false
+        }
+      }
+    },
+    "files.delete": {
+      "labels": {
+        "read_only": "false",
+        "destructive": "true",
+        "idempotent": "false",
+        "open_world": "true"
+      },
+      "source": {
+        "tool_digest": "sha256:6c9f8a8ff3bc14821e9f7e3d1ce76e0a413fd0d8caa8d15afadd43d9877b7f60",
+        "annotations": {
+          "readOnlyHint": false,
+          "destructiveHint": true,
+          "idempotentHint": false
+        }
+      }
+    }
+  }
+}

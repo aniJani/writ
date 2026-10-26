@@ -1,0 +1,3 @@
+args: check tests/cli/tools/policy.json --tools
+exit: 2
+stderr: error: --tools needs a value

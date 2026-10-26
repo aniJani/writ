@@ -1,0 +1,14 @@
+{
+  "$schema": "../writ.policy-0.1.schema.json",
+  "writ": "0.1",
+  "labels": {
+    "risk": { "order": ["read", "navigate", "device", "spend", "destructive"] }
+  },
+  "rules": [
+    { "when": { "risk": ">=device" }, "require": { "consent": "per_call" } },
+    {
+      "when": { "risk": ">=destructive" },
+      "require": { "consent": { "quorum": 1, "human_only": true, "exclude_requester": true }, "grantable": null }
+    }
+  ]
+}

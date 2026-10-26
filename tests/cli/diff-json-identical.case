@@ -1,0 +1,2 @@
+args: diff --json tests/cli/diff/tight.json tests/cli/diff/tight.json tests/cli/diff/old-events.jsonl
+exit: 0

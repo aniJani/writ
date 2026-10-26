@@ -1,0 +1,11 @@
+{
+  "writ": "0.1",
+  "mode": "log_only",
+  "approver_roles": ["owner"],
+  "limits": { "approval_ttl_ms": 1000, "max_proposals_per_session": 2, "max_approval_requests_per_session": 1 },
+  "actions": {
+    "email.send": { "consent": "per_call", "guards": ["inbox_connected"] },
+    "ticket.close": { "consent": "per_call", "mode": "enforce" },
+    "files.wipe": { "exposed": false }
+  }
+}

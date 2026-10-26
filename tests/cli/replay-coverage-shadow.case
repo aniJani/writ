@@ -1,0 +1,2 @@
+args: replay tests/cli/traces/would-deny.jsonl --coverage
+exit: 0

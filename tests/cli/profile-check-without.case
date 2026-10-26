@@ -1,0 +1,2 @@
+args: check tests/cli/policies/profile-retry.json
+exit: 0

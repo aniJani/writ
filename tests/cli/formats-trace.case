@@ -1,0 +1,2 @@
+args: replay tests/cli/traces/formats-shop.jsonl
+exit: 0

@@ -1,0 +1,13 @@
+usage: writ import mcp <tools.json> [--server <name>] [--preset-dir <dir>] [--out <file>]
+
+Draft a layer-2 policy from an MCP tools/list result or an array of tools. Each tool becomes
+an action that extends the mcp-annotations preset (and mcp-risk-metadata when a tool carries
+SEP-2793 fields) and is labeled at every dimension's strictest value. Annotations are the
+server's untrusted claims: they are copied into source.annotations, never applied, and each
+claim not applied is named on stderr.
+  --server <name>     record this server name in each action's source
+  --preset-dir <dir>  the directory the draft's extends names for the presets (default: presets)
+  --out <file>        write the draft to this file instead of stdout
+
+Exit 0 when the draft is written, 2 for a usage or input error (a file that cannot be read or
+parsed, no tools, a duplicate tool name or a number the digest refuses).

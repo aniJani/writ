@@ -1,0 +1,14 @@
+{
+  "generator": 1,
+  "fixtures": [
+    { "policy": "fixtures/basic.json", "depth": 2, "max_states": 10000, "traces": 408, "states": 181, "truncated": false, "sha256": "3091567b95663ff2fbe853989eaabac71123c24f07060e7b77453b73a7a309a5" },
+    { "policy": "fixtures/escalation.json", "depth": 4, "max_states": 10000, "traces": 3045, "states": 1609, "truncated": false, "sha256": "1678352a4099119d7dcdb2ebc00705ea5039e182c08f7dd26276eed3fee59bd1" },
+    { "policy": "fixtures/grants.json", "depth": 3, "max_states": 10000, "traces": 4605, "states": 3034, "truncated": false, "sha256": "267304a0e2da88fbbb91a0f478207d421e3e0ef09582585ce8b7056ef7497aa7" },
+    { "policy": "fixtures/lifecycle.json", "depth": 3, "max_states": 10000, "traces": 845, "states": 418, "truncated": false, "sha256": "8593d35cbc37b6ee9f7d5744f6e3de581e547a082a2c8dacec0b8eea1a682aa7" },
+    { "policy": "fixtures/meters-settle.json", "depth": 3, "max_states": 10000, "traces": 2433, "states": 1508, "truncated": false, "sha256": "6002eb67667e3ac9106d5e5056f19696e2a0095c0b6903ab5bc3f7be915f4259" },
+    { "policy": "fixtures/meters.json", "depth": 2, "max_states": 10000, "traces": 1407, "states": 944, "truncated": false, "sha256": "07af05285d9aafba09166d5740444df89d5c792ff38da09dd87062dff946e4ef" },
+    { "policy": "fixtures/quorum.json", "depth": 3, "max_states": 10000, "traces": 2830, "states": 1783, "truncated": false, "sha256": "d457a7621c0de5704494d16a5cf94df4f1f75b73f160eca51f2d95a88242ca37" },
+    { "policy": "fixtures/retry.json", "depth": 4, "max_states": 10000, "traces": 6038, "states": 3362, "truncated": false, "sha256": "ee9eee5bd954a52efea019cb53ed6f17ed91a76c5c6785a0efb6601712da0be3" },
+    { "policy": "fixtures/shadow.json", "depth": 3, "max_states": 10000, "traces": 2153, "states": 1324, "truncated": false, "sha256": "330adadf1d9d1217ea900804dd495eecdd7be2e5ad8ccd14f08b897fbc555c18" }
+  ]
+}

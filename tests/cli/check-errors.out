@@ -1,0 +1,8 @@
+error: a: it uses meter "nope", which is not defined
+error: a: a consent clause has a quorum of 0
+error: a: a consent clause names role "boss", which is not an approver role
+error: b: retry_after_unknown needs the action to be idempotent
+error: b: max_attempts is 0
+error: max_consecutive_failures is 0
+warning: some actions can need approval but no approval_ttl_ms is set, so requests never expire
+6 errors, 1 warning

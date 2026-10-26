@@ -1,0 +1,30 @@
+{
+  "writ": "0.1",
+  "extends": ["../../../schema/presets/mcp-annotations.json"],
+  "approver_roles": ["user"],
+  "limits": { "approval_ttl_ms": 600000 },
+  "actions": {
+    "docs.search": {
+      "labels": { "read_only": "true", "destructive": "false", "idempotent": "true", "open_world": "false" },
+      "idempotent": true
+    },
+    "files.write": {
+      "labels": { "read_only": "false", "destructive": "false", "idempotent": "true", "open_world": "false" },
+      "grantable": { "scope": "session", "max_uses": 3 }
+    },
+    "files.delete": {
+      "labels": { "read_only": "false", "destructive": "true", "idempotent": "true", "open_world": "false" },
+      "grantable": { "scope": "session", "max_uses": 3 }
+    },
+    "web.fetch": {
+      "labels": { "read_only": "true", "destructive": "false", "idempotent": "false", "open_world": "true" },
+      "idempotent": true,
+      "retry_after_unknown": true
+    },
+    "web.post": {
+      "grantable": { "scope": "turn", "max_uses": 3 },
+      "idempotent": true,
+      "retry_after_unknown": true
+    }
+  }
+}

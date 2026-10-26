@@ -1,0 +1,2 @@
+args: digest tests/cli/policies/formats-digest-escapes.json
+exit: 0

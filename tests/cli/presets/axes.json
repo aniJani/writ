@@ -1,0 +1,23 @@
+{
+  "writ": "0.1",
+  "extends": ["../../../schema/presets/axes.json"],
+  "approver_roles": ["owner"],
+  "limits": { "approval_ttl_ms": 600000 },
+  "actions": {
+    "status.read": {
+      "labels": { "effect": "read", "reversibility": "reversible", "audience": "self", "value": "none", "data": "public" }
+    },
+    "doc.edit": {
+      "labels": { "effect": "write", "reversibility": "partially", "audience": "internal", "value": "low", "data": "internal" },
+      "grantable": { "scope": "session", "max_uses": 3 }
+    },
+    "inbox.read": {
+      "labels": { "effect": "read", "reversibility": "reversible", "audience": "self", "value": "none", "data": "private" }
+    },
+    "payment.send": {
+      "labels": { "effect": "write", "reversibility": "irreversible", "audience": "external", "value": "high", "data": "internal" },
+      "grantable": { "scope": "turn", "max_uses": 3 }
+    },
+    "account.close": {}
+  }
+}

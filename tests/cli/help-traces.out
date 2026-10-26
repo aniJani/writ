@@ -1,0 +1,15 @@
+usage: writ traces <policy.json> [--depth N] [--max-states M] [--out <dir>]
+
+Explore the policy breadth-first over a small alphabet of events and print, one JSON trace per
+line, the shortest trace for every transition between abstract states, plus the first rejected
+event found for each event type and reason. The policy may be layer 1 or 2; each trace carries
+the layer-1 policy (for layer 2, what writ expand prints). The same input gives the same bytes.
+  --depth N        events after session_start (default 4)
+  --max-states M   stop after M abstract states (default 20000)
+  --out <dir>      write <dir>/<name>.jsonl instead, <name> being the policy file name without .json
+
+stderr gets states S, traces T (accepted A, rejected R), depth N, with ", truncated" when
+--max-states stopped the search, after one line for each action left out because its name,
+a guard name or an escalator name is longer than an event string may be.
+
+Exit 0, or 2 for a usage, IO or policy error (a policy with check errors prints them).

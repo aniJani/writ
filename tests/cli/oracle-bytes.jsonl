@@ -1,0 +1,4 @@
+{"type":"session_start","seq":1,"time":0,"state_version":0,"session_id":"s1","policy_digest":"sha256:0fa9e2f9aa912807ca41d8b206eef7ddd1fab4bb5ecc4073ff14bde8669fac39","requester":"u1","permissions":["fs"],"approvers":{},"ledger":{}}
+{"type":"turn_start","seq":2,"time":10,"state_version":1,"user_initiated":true}
+{"type":"propose","seq":3,"time":20,"state_version":2,"call_id":"cÿþx","tool":"files.read","call_digest":"d","guards":{},"escalators":{}}
+{"type":"step_start","seq":3,"time":20,"state_version":2}

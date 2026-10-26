@@ -1,0 +1,3 @@
+args: oracle tests/cli/policies/formats-shop.json --state tests/cli/states/formats-state.json
+stdin: tests/cli/formats-events-b.jsonl
+exit: 0

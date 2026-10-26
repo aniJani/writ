@@ -1,0 +1,5 @@
+{
+  "writ": "0.1",
+  "extends": ["org.json", "nope.json"],
+  "approver_roles": ["finance"]
+}

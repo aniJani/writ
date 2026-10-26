@@ -1,0 +1,13 @@
+{
+  "writ": "0.1",
+  "approver_roles": ["owner"],
+  "labels": { "risk": { "order": ["low", "high"] } },
+  "rules": [
+    { "when": { "reach": ">=wide" }, "require": { "exposed": false } },
+    { "when": { "risk": ">=high" }, "require": { "consent": { "quorum": 1, "roles": ["finance"] } } }
+  ],
+  "actions": {
+    "files.delete": { "labels": { "risk": "severe" } },
+    "files.list": { "labels": { "risk": "low" }, "meters": ["nope"] }
+  }
+}

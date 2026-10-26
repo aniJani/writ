@@ -1,0 +1,12 @@
+{
+  "writ": "0.1",
+  "extends": ["parent.json"],
+  "approver_roles": ["owner"],
+  "limits": { "approval_ttl_ms": 600000 },
+  "labels": { "risk": { "order": ["read", "write"] } },
+  "rules": [{ "when": { "risk": ">=write" }, "require": { "consent": "per_call" } }],
+  "actions": {
+    "web.fetch": { "labels": { "risk": "read" } },
+    "notes.put": { "labels": { "risk": "write" } }
+  }
+}

@@ -1,0 +1,2 @@
+args: check tests/cli/policies/formats-err-meter.json --json
+exit: 1

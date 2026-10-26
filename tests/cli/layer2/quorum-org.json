@@ -1,0 +1,7 @@
+{
+  "writ": "0.1",
+  "actions": {
+    "db.drop": { "consent": { "quorum": 2, "roles": ["dba"] } },
+    "shop.buy": { "consent": { "quorum": 2, "roles": ["dba"] } }
+  }
+}

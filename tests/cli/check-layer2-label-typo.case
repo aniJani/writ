@@ -1,0 +1,3 @@
+args: check tests/cli/layer2/label-typo.json
+exit: 2
+stderr: error: tests/cli/layer2/label-typo.json: actions.files.list.label: unknown field

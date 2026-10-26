@@ -1,0 +1,2 @@
+args: check tests/cli/tools/child.json --tools tests/cli/tools/web-reordered.json
+exit: 0

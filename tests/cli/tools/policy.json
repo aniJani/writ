@@ -1,0 +1,20 @@
+{
+  "writ": "0.1",
+  "approver_roles": ["owner"],
+  "limits": { "approval_ttl_ms": 600000 },
+  "actions": {
+    "web.fetch": {
+      "permission": "web.read",
+      "source": { "tool_digest": "sha256:2090263f72e715d1bcdc3e8c2dbba75a65f0567b365ee68a8f371b5a9a6b1cab", "server": "web" }
+    },
+    "notes.put": {
+      "consent": "per_call",
+      "source": { "tool_digest": "sha256:e3176c44afb0a5843e2d1fc0d899dffc45765467f4ef10794aa545093153230b", "server": "web" }
+    },
+    "send_mail": {
+      "consent": "per_call",
+      "source": { "tool_digest": "sha256:d3caf357521ef568b25c8dcbddc0b8f479ece53c47c337492bb60a3eefe49969", "server": "mail", "tool": "mail.send" }
+    },
+    "calc": {}
+  }
+}

@@ -1,0 +1,3 @@
+error: db.drop: it is labeled on dimension "risk", which is not declared (in tests/cli/layer2/undeclared-org.json)
+error: rules[0] (in tests/cli/layer2/undeclared-org.json): when names dimension "risk", which is not declared
+2 errors, 0 warnings

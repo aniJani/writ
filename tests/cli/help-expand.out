@@ -1,0 +1,8 @@
+usage: writ expand <policy.json> [--out <file>]
+
+Resolve extends, apply labels and rules, and print the layer-1 policy the kernel runs
+as canonical JSON on one line, with each action's review, messages and source.
+  --out <file>   write it to this file instead
+
+Exit 0 when the policy expands, 1 when it or the policy it expands to has errors (printed
+instead; warnings do not count), 2 when a file cannot be read, parsed or decoded.

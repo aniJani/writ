@@ -1,0 +1,1 @@
+{"writ":"0.1","approver_roles":["owner"],"actions":{"a":{"consent":{"all":[{"quorum":0,"roles":["boss"]}]},"meters":["nope"]},"b":{"retry_after_unknown":true,"max_attempts":0}},"limits":{"max_consecutive_failures":0}}

@@ -1,0 +1,2 @@
+args: digest tests/cli/policies/formats-shop.json
+exit: 0

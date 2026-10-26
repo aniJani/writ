@@ -1,0 +1,7 @@
+{
+  "writ": "0.1",
+  "rules": [
+    { "when": { "risk": ">=medium" }, "require": { "exposed": false } }
+  ],
+  "actions": { "db.drop": { "labels": { "risk": "high" } } }
+}

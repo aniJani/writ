@@ -1,0 +1,3 @@
+{"type":"propose","seq":6,"time":50,"state_version":5,"call_id":"c3","tool":"files.read","call_digest":"d3","guards":{},"escalators":{}}
+
+{"type":"kill","seq":7,"time":60,"state_version":6}

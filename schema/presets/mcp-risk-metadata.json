@@ -1,0 +1,17 @@
+{
+  "$schema": "../writ.policy-0.1.schema.json",
+  "writ": "0.1",
+  "labels": {
+    "risk_level": { "order": ["low", "medium", "high", "critical"] },
+    "blast_radius": { "order": ["self", "team", "org", "public"] },
+    "reversibility": { "order": ["reversible", "partially", "irreversible"] },
+    "approval_recommendation": { "order": ["none", "single", "multi"] }
+  },
+  "rules": [
+    { "when": { "risk_level": ">=high" }, "require": { "consent": "per_call" } },
+    { "when": { "approval_recommendation": ">=single" }, "require": { "consent": "per_call" } },
+    { "when": { "approval_recommendation": ">=multi" }, "require": { "consent": { "quorum": 2 } } },
+    { "when": { "reversibility": ">=irreversible" }, "require": { "grantable": null } },
+    { "when": { "blast_radius": ">=public" }, "require": { "flags": ["sends_external"] } }
+  ]
+}

@@ -1,0 +1,2 @@
+args: replay corpus/examples/web-chat.jsonl corpus/examples/payments.jsonl --coverage
+exit: 0

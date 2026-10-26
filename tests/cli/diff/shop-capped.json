@@ -1,0 +1,18 @@
+{
+  "writ": "0.1",
+  "approver_roles": ["owner"],
+  "meters": {
+    "spend": { "currency": "USD", "cap": 1000, "scope": "principal", "window_ms": 86400000 }
+  },
+  "limits": { "approval_ttl_ms": 600000, "max_consecutive_failures": 3 },
+  "actions": {
+    "search": { "permission": "shop.read" },
+    "buy": {
+      "permission": "shop.buy",
+      "consent": "per_call",
+      "guards": ["card_on_file"],
+      "meters": ["spend"],
+      "idempotent": true
+    }
+  }
+}

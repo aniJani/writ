@@ -1,0 +1,2 @@
+args: check tests/cli/layer2/cycle-a.json
+exit: 1

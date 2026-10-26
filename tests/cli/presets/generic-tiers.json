@@ -1,0 +1,16 @@
+{
+  "writ": "0.1",
+  "extends": ["../../../schema/presets/generic-tiers.json"],
+  "approver_roles": ["owner"],
+  "limits": { "approval_ttl_ms": 600000 },
+  "actions": {
+    "vm.status": { "labels": { "risk": "read" } },
+    "vm.console": { "labels": { "risk": "navigate" } },
+    "vm.restart": {
+      "labels": { "risk": "device" },
+      "grantable": { "scope": "session", "max_uses": 5 }
+    },
+    "shop.buy": { "labels": { "risk": "spend" }, "grantable": { "scope": "turn", "max_uses": 3 } },
+    "vm.terminate": { "grantable": { "scope": "turn", "max_uses": 1 } }
+  }
+}

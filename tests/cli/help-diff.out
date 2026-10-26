@@ -1,0 +1,14 @@
+usage: writ diff <old.json> <new.json> <events.jsonl> [--json]
+
+Replay recorded events (one JSON object per line) under both policies and print each event
+whose verdict changed, state_version aside, then a count, noting the events both policies
+rejected. The file holds one session: it starts with a session_start and holds no other.
+Each policy may be layer 1 or 2. Each run starts from a fresh state under its own policy
+digest, and diff sets every event's state_version, and a session_start's policy_digest
+(which may be left out), to that run's, so one changed verdict does not turn every later
+event into a mismatch.
+  --json   print one JSON object per changed event instead, and no count
+
+Exit 0 when no verdict changed, 1 when one did, 2 for a usage, IO or policy error, an event
+line that is empty or does not parse or decode, or a file that does not start with a
+session_start or holds a second one.

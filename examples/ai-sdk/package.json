@@ -1,0 +1,17 @@
+{
+  "name": "writ-ai-sdk-example",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Drives the Vercel AI SDK's tool approval flow through the Writ adapter with a mock model",
+  "type": "module",
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "pretest": "node ../../packages/writ/scripts/check-wasm.mjs",
+    "test": "node --test test/"
+  },
+  "dependencies": {
+    "@anijani/writ": "file:../../packages/writ",
+    "ai": "7.0.135",
+    "zod": "4.6.5"
+  }
+}

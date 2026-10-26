@@ -1,0 +1,9 @@
+{
+  "writ": "0.1",
+  "approver_roles": ["owner"],
+  "limits": { "approval_ttl_ms": 600000 },
+  "actions": {
+    "search": { "permission": "shop.read" },
+    "buy": { "permission": "shop.buy", "consent": "per_call", "idempotent": true }
+  }
+}

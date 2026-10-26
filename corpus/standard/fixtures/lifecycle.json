@@ -1,0 +1,14 @@
+{
+  "writ": "0.1",
+  "approver_roles": ["owner"],
+  "limits": {
+    "max_steps_per_turn": 1,
+    "max_proposals_per_turn": 2,
+    "max_approval_requests_per_turn": 1,
+    "approval_ttl_ms": 100,
+    "authorized_ttl_ms": 50
+  },
+  "actions": {
+    "deploy.run": { "consent": "per_call", "approval_ttl_ms": 200 }
+  }
+}

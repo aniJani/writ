@@ -1,0 +1,3 @@
+args: check tests/cli/policies/nope.json
+exit: 2
+stderr: error: tests/cli/policies/nope.json: cannot read the file

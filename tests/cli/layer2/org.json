@@ -1,0 +1,21 @@
+{
+  "writ": "0.1",
+  "labels": { "risk": { "order": ["low", "high"] } },
+  "rules": [
+    { "when": { "risk": ">=high" }, "require": { "guards": ["change_window"] } }
+  ],
+  "actions": {
+    "payments.refund": {
+      "labels": { "risk": "high" },
+      "permission": "payments.refund",
+      "consent": { "quorum": 2, "roles": ["finance"] },
+      "exposed": false,
+      "review": { "title": "Refund a payment" }
+    },
+    "repo.push": {
+      "labels": { "risk": "low" },
+      "consent": "per_call",
+      "grantable": { "scope": "turn", "max_uses": 3 }
+    }
+  }
+}

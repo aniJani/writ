@@ -1,0 +1,2 @@
+args: check schema/presets/axes.json
+exit: 0

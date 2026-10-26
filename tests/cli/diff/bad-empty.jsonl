@@ -1,0 +1,4 @@
+{"type":"session_start","seq":1,"time":0,"state_version":0,"session_id":"s1","policy_digest":"sha256:295be5b799a0c77012d75cea8e1334425b06aee33a011e8d07aa40a44ab4adbf","requester":"u1","permissions":["shop.read","shop.buy"],"approvers":{"laptop":{"principal":"u1","kind":"human","roles":["owner"]}},"ledger":{}}
+{"type":"turn_start","seq":2,"time":1000,"state_version":1,"user_initiated":true}
+
+{"type":"step_start","seq":3,"time":1000,"state_version":2}

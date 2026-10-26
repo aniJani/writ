@@ -1,0 +1,2 @@
+args: check tests/cli/layer2/diamond-bad.json
+exit: 1

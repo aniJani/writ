@@ -1,0 +1,11 @@
+{
+  "writ": "0.1",
+  "approver_roles": ["owner"],
+  "limits": { "approval_ttl_ms": 600000 },
+  "actions": {
+    "read_file": {
+      "consent": "per_call",
+      "source": { "tool_digest": "sha256:fbc07945a326e61dbf9db739cc4fe5aaab2b2bb5046cfd16c6db1efc72c03330", "tool": "write_file" }
+    }
+  }
+}

@@ -1,0 +1,9 @@
+ok   tests/cli/version/lakefile.toml: 1.2.3-preview.4
+FAIL tests/cli/version/Version-bad.lean: 1.2.3, expected 1.2.3-preview.4
+ok   tests/cli/version/package.json: 1.2.3-preview.4
+ok   tests/cli/version/package-lock.json: 1.2.3-preview.4
+ok   tests/cli/version/package-lock.json packages[""]: 1.2.3-preview.4
+ok   tests/cli/version/pyproject.toml: 1.2.3a4
+ok   tests/cli/version/uv.lock writ-kernel: 1.2.3a4
+ok   tests/cli/version/CHANGELOG.md: ## 1.2.3-preview.4
+1 mismatch for version 1.2.3-preview.4

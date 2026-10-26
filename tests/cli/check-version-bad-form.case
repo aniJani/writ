@@ -1,0 +1,4 @@
+cmd: scripts/check-version.sh
+args: 1.2
+exit: 2
+stderr: not X.Y.Z or X.Y.Z-preview.N

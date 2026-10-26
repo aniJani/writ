@@ -1,0 +1,11 @@
+{
+  "writ": "0.1",
+  "extends": ["org-baseline.json"],
+  "approver_roles": ["owner"],
+  "labels": { "risk": { "order": ["read", "navigate", "device", "spend", "destructive"] } },
+  "rules": [
+    { "when": { "risk": ">=device" }, "require": { "consent": "per_call" } },
+    { "when": { "risk": ">=destructive" }, "require": { "exposed": false } }
+  ],
+  "actions": { "vm.restart": { "labels": { "risk": "device" }, "permission": "vm.power" } }
+}

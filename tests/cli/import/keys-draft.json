@@ -1,0 +1,26 @@
+{
+  "writ": "0.1",
+  "extends": [
+    "presets/mcp-annotations.json"
+  ],
+  "approver_roles": [
+    "owner"
+  ],
+  "actions": {
+    "keys\u0007": {
+      "labels": {
+        "read_only": "false",
+        "destructive": "true",
+        "idempotent": "false",
+        "open_world": "true"
+      },
+      "source": {
+        "tool_digest": "sha256:07497f8ec0857c167978216b6f1d594c82a1d228c9f8fdfe20bd747e8c62fdf4",
+        "annotations": {
+          "readOnlyHint": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+          "ok\tkey": 1
+        }
+      }
+    }
+  }
+}

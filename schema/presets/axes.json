@@ -1,0 +1,22 @@
+{
+  "$schema": "../writ.policy-0.1.schema.json",
+  "writ": "0.1",
+  "labels": {
+    "effect": { "order": ["none", "read", "write", "delete"] },
+    "reversibility": { "order": ["reversible", "partially", "irreversible"] },
+    "audience": { "order": ["self", "internal", "external"] },
+    "value": { "order": ["none", "low", "high"] },
+    "data": { "order": ["public", "internal", "private"] }
+  },
+  "rules": [
+    { "when": { "effect": ">=write" }, "require": { "consent": "per_call" } },
+    { "when": { "effect": ">=delete" }, "require": { "grantable": null } },
+    { "when": { "reversibility": ">=irreversible" }, "require": { "grantable": null } },
+    { "when": { "audience": ">=external" }, "require": { "flags": ["sends_external"] } },
+    { "when": { "data": ">=private" }, "require": { "flags": ["reads_private"] } },
+    {
+      "when": { "value": ">=high" },
+      "require": { "consent": { "quorum": 1, "human_only": true, "exclude_requester": true } }
+    }
+  ]
+}

@@ -1,0 +1,2 @@
+args: check tests/cli/policies/web-chat-1.json
+exit: 0

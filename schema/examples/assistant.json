@@ -1,0 +1,49 @@
+{
+  "$schema": "../writ.policy-0.1.schema.json",
+  "writ": "0.1",
+  "approver_roles": ["user"],
+  "meters": {
+    "calls": { "unit": "calls", "cap": 20, "scope": "principal", "window_ms": 600000 }
+  },
+  "limits": { "approval_ttl_ms": 600000 },
+  "actions": {
+    "mail.search": { "permission": "mail.read" },
+    "mail.read": { "permission": "mail.read" },
+    "calendar.list": { "permission": "calendar.read" },
+    "files.search": { "permission": "files.read" },
+    "files.read": { "permission": "files.read" },
+    "web.search": { "permission": "web.browse" },
+    "web.open": {},
+    "mail.send": {
+      "permission": "mail.send",
+      "consent": "per_call",
+      "guards": ["recipient_known"]
+    },
+    "calendar.invite": {
+      "permission": "calendar.write",
+      "consent": "per_call",
+      "guards": ["recipient_known"]
+    },
+    "files.share": {
+      "consent": "per_call",
+      "guards": ["account_linked", "sharing_allowed"],
+      "meters": ["calls"]
+    },
+    "files.delete": {
+      "permission": "files.write",
+      "consent": "per_call",
+      "guards": ["account_linked", "trash_enabled"],
+      "meters": ["calls"]
+    },
+    "payments.send": {
+      "permission": "payments.send",
+      "consent": "per_call",
+      "guards": ["account_linked", "under_daily_limit"]
+    },
+    "payments.cancel": {
+      "permission": "payments.send",
+      "consent": "per_call",
+      "guards": ["account_linked"]
+    }
+  }
+}

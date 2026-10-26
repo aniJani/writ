@@ -1,0 +1,4 @@
+args: oracle tests/cli/policies/simple.json
+stdin: tests/cli/policies
+exit: 2
+stderr: error: inappropriate type

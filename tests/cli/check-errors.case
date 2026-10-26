@@ -1,0 +1,2 @@
+args: check tests/cli/policies/errors.json
+exit: 1

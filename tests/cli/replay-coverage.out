@@ -1,0 +1,10 @@
+ok web-chat/parallel-calls
+ok web-chat/stop-twice
+ok web-chat/reload-repeat
+ok web-chat/reject-then-retry
+ok payments/manager-and-finance
+ok payments/partial-capture
+ok payments/overrun-counts-as-failure
+ok payments/grant-max-cost
+8 traces, 0 failed
+{"reasons":["already_approved","escalated","meter_exceeded","previously_rejected","stale_seq"],"decisions":["allowed","allowed_by_grant","authorized","denied","dispatch_claimed","existing","needs_approval","overrun","pending"]}

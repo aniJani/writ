@@ -1,0 +1,5 @@
+{"verdict":"accepted","state_version":5,"decision":"authorized"}
+{"verdict":"accepted","state_version":6,"decision":"dispatch_claimed"}
+{"verdict":"accepted","state_version":7}
+{"verdict":"accepted","state_version":8,"decision":"denied","reason":"unknown_tool","retry":"never","message":"This tool is not part of the policy. Do not call it again; use only the tools you have been given."}
+{"verdict":"rejected","state_version":8,"reason":"state_version_mismatch","retry":"fix_request","message":"The system that runs tool calls hit an internal error (it acted on an out-of-date copy of the session). Your request was not the cause; do not change or repeat it on your own, and tell the user if this keeps happening."}

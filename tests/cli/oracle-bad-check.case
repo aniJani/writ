@@ -1,0 +1,3 @@
+args: oracle tests/cli/policies/errors.json
+exit: 2
+stderr: error: a: a consent clause has a quorum of 0

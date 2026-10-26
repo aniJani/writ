@@ -1,0 +1,4 @@
+error: files.delete: it uses meter "nope", which is not defined
+error: files.delete: a consent clause has a quorum of 0
+error: files.delete: it needs approval but the policy has no approver roles
+3 errors

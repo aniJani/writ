@@ -1,0 +1,6 @@
+{
+  "tools": [
+    { "name": "read_file", "description": "Read a file.", "inputSchema": { "type": "object", "properties": { "path": { "type": "string" } } } },
+    { "name": "write_file", "description": "Write a file.", "inputSchema": { "type": "object", "properties": { "path": { "type": "string" }, "text": { "type": "string" } } } }
+  ]
+}

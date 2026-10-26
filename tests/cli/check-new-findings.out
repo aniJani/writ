@@ -1,0 +1,6 @@
+error: empty: a consent group has no clauses, so it allows everything
+error: empty-group: a consent group has no clauses, so it allows everything
+warning: meter "usd" has no cap, so it records usage but never denies a call
+warning: cost-no-consent: consent_if_cost_over is set but the action's consent is none, so it has no effect
+warning: msg: messages are checked but not applied in 0.1; the binding applies them
+2 errors, 3 warnings

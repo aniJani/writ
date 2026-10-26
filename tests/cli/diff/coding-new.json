@@ -1,0 +1,33 @@
+{
+  "writ": "0.1",
+  "approver_roles": [
+    "owner"
+  ],
+  "limits": {
+    "max_consecutive_failures": 3
+  },
+  "actions": {
+    "shell.run": {
+      "consent": "none",
+      "grantable": {
+        "scope": "session",
+        "max_uses": 50,
+        "max_duration_ms": 3600000,
+        "any_args": true
+      },
+      "escalate": {
+        "not_allowlisted": {
+          "consent": "per_call",
+          "grantable": true
+        },
+        "dangerous": {
+          "consent": "per_call",
+          "grantable": true
+        }
+      }
+    },
+    "files.read": {
+      "consent": "none"
+    }
+  }
+}

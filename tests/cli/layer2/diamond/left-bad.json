@@ -1,0 +1,5 @@
+{
+  "writ": "0.1",
+  "extends": ["base-bad.json"],
+  "actions": { "notes.edit": {} }
+}

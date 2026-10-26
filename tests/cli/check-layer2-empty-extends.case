@@ -1,0 +1,3 @@
+args: check tests/cli/layer2/empty-extends.json
+exit: 2
+stderr: error: tests/cli/layer2/empty-extends.json: extends[0]: expected a non-empty path

@@ -1,0 +1,2 @@
+args: explain corpus/examples/mcp-gateway.jsonl
+exit: 0

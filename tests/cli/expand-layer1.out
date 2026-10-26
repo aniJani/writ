@@ -1,0 +1,1 @@
+{"actions":{"buy":{"consent":"per_call","guards":["card_on_file"],"idempotent":true,"meters":["spend"],"permission":"shop.buy"},"search":{"permission":"shop.read"}},"approver_roles":["owner"],"limits":{"approval_ttl_ms":600000,"max_consecutive_failures":3},"meters":{"spend":{"cap":5000,"currency":"USD","scope":"principal","window_ms":86400000}},"writ":"0.1"}

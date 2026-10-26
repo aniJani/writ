@@ -1,0 +1,3 @@
+ok shadow/guard-false-would-deny
+1 trace, 0 failed
+{"reasons":["guard_false"],"decisions":["allowed"]}

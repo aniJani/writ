@@ -1,0 +1,6 @@
+{
+  "writ": "0.1",
+  "actions": {
+    "web.fetch": { "source": { "tool_digest": "sha256:6DD58717871312D14A4553A8F7F7981B0F7D4217863D4A02369C86F50EFCE0AA", "server": "web" } }
+  }
+}

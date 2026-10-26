@@ -1,0 +1,4 @@
+[
+  { "name": "calendar.list", "description": "List events.", "inputSchema": { "type": "object" } },
+  { "name": "calendar.add", "description": "Add an event.", "inputSchema": { "type": "object", "properties": { "start": { "type": "number", "minimum": 0.5 } } } }
+]

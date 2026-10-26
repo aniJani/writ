@@ -1,0 +1,12 @@
+{
+  "writ": "0.1",
+  "approver_roles": ["owner"],
+  "limits": { "approval_ttl_ms": 1000 },
+  "actions": {
+    "calendar.create": { "consent": "per_call", "grantable": { "scope": "turn", "max_uses": 1 } },
+    "shell.run": {
+      "consent": "per_call",
+      "grantable": { "scope": "session", "max_uses": 2, "max_duration_ms": 500, "any_args": true }
+    }
+  }
+}

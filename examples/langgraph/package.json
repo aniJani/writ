@@ -1,0 +1,18 @@
+{
+  "name": "writ-langgraph-example",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Replays the langgraph-resume corpus traces through a LangGraph.js graph gated by Writ",
+  "type": "module",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "pretest": "node ../../packages/writ/scripts/check-wasm.mjs",
+    "test": "node --test test/"
+  },
+  "dependencies": {
+    "@anijani/writ": "file:../../packages/writ",
+    "@langchain/core": "1.2.14",
+    "@langchain/langgraph": "1.4.19",
+    "zod": "3.25.76"
+  }
+}

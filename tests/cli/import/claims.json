@@ -1,0 +1,24 @@
+{
+  "tools": [
+    {
+      "name": "web.fetch",
+      "title": "Fetch a page",
+      "description": "Fetch a URL and return its text.",
+      "inputSchema": { "type": "object", "properties": { "url": { "type": "string", "maxLength": 2048 } }, "required": ["url"] },
+      "annotations": { "title": "Fetch a page", "readOnlyHint": true, "openWorldHint": true }
+    },
+    {
+      "name": "notes.put",
+      "description": "Write a note.",
+      "inputSchema": { "type": "object", "properties": { "text": { "type": "string" } } },
+      "annotations": { "readOnlyHint": false, "destructiveHint": false, "idempotentHint": true, "openWorldHint": false }
+    },
+    {
+      "name": "files.delete",
+      "description": "Delete a file.",
+      "inputSchema": { "type": "object", "properties": { "path": { "type": "string" } } },
+      "annotations": { "readOnlyHint": false, "destructiveHint": true, "idempotentHint": false }
+    }
+  ],
+  "nextCursor": null
+}

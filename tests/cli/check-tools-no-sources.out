@@ -1,0 +1,4 @@
+warning: web.fetch: it allows tool "web.fetch" but records no source.tool_digest, so writ cannot detect changes to the tool
+warning: notes.put: it allows tool "notes.put" but records no source.tool_digest, so writ cannot detect changes to the tool
+warning: tool "shell.exec" is in the tool list but no action names it (by name or source.tool), so default deny refuses it
+0 errors, 3 warnings

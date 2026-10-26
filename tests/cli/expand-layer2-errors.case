@@ -1,0 +1,2 @@
+args: expand tests/cli/layer2/expanded-errors.json
+exit: 1

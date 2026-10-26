@@ -1,0 +1,2 @@
+args: check tests/cli/layer2/problems.json --json
+exit: 1

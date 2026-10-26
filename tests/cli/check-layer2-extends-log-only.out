@@ -1,0 +1,3 @@
+error: the policy extends other policies and sets "mode": "log_only", so every action they require would only be logged; set "mode": "log_only" on this policy's own actions instead
+warning: meter "usd_day" has no cap, so it records usage but never denies a call
+1 error, 1 warning

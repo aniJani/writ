@@ -1,0 +1,20 @@
+{
+  "writ": "0.1",
+  "extends": ["org.json"],
+  "approver_roles": ["finance", "dev"],
+  "limits": { "approval_ttl_ms": 600000 },
+  "actions": {
+    "payments.refund": {
+      "labels": { "risk": "high" },
+      "consent": { "quorum": 1, "roles": ["finance"] },
+      "exposed": true
+    },
+    "repo.push": {
+      "labels": { "risk": "low" },
+      "consent": "per_call",
+      "grantable": { "scope": "session", "max_uses": 10 },
+      "messages": { "guard_false": { "user": "Pushes wait for the change window." } }
+    },
+    "repo.read": { "labels": { "risk": "low" } }
+  }
+}

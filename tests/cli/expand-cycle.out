@@ -1,0 +1,2 @@
+error: extends forms a cycle: tests/cli/layer2/cycle-a.json -> tests/cli/layer2/cycle-b.json -> tests/cli/layer2/cycle-a.json
+1 error

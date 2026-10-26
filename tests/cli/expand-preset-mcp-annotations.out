@@ -1,0 +1,1 @@
+{"actions":{"docs.search":{"idempotent":true},"files.delete":{"consent":"per_call"},"files.write":{"consent":"per_call","grantable":{"max_uses":3,"scope":"session"}},"web.fetch":{"flags":["sends_external"]},"web.post":{"consent":"per_call","flags":["sends_external"]}},"approver_roles":["user"],"limits":{"approval_ttl_ms":600000},"writ":"0.1"}

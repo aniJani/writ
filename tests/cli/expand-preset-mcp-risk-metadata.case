@@ -1,0 +1,2 @@
+args: expand tests/cli/presets/mcp-risk-metadata.json
+exit: 0

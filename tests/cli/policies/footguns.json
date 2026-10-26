@@ -1,0 +1,8 @@
+{"writ":"0.1",
+ "meters":{
+  "free":{"unit":"calls"},
+  "life":{"unit":"calls","cap":10,"scope":"principal"},
+  "odd":{"currency":"USD","cap":5,"max_per_call":9},
+  "ok":{"currency":"USD","cap":10,"scope":"principal","window_ms":1000,"max_per_call":10}},
+ "actions":{
+  "r":{"idempotent":true,"retry_after_unknown":true,"max_attempts":1,"meters":["free","life","odd","ok"]}}}

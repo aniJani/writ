@@ -1,0 +1,3 @@
+args: oracle tests/cli/policies/simple.json --state-out @TMP@/s
+stdin: tests/cli/oracle-bytes.jsonl
+exit: 0

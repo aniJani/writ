@@ -1,0 +1,7 @@
+{
+  "writ": "0.1",
+  "approver_roles": ["owner"],
+  "labels": { "risk": { "order": ["low", "high"] } },
+  "rules": [{ "when": { "risk": ">=high" }, "require": { "consent": "per_call" } }],
+  "actions": { "ping": { "labels": { "risk": "high" }, "review": { "title": "Ping the server" } } }
+}

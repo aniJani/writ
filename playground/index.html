@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Writ playground</title>
+<link rel="stylesheet" href="style.css">
+<script>
+  // Classic script: it runs from file:// too, where the module below cannot load.
+  function writShowLoadError(text) {
+    var show = function () {
+      var hint = document.getElementById("load-status")
+      hint.textContent = text || hint.getAttribute("data-serve-hint")
+      hint.className = "status error"
+    }
+    if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", show)
+    else show()
+  }
+  if (location.protocol === "file:") writShowLoadError()
+</script>
+<script type="module" src="app.js" onerror="writShowLoadError()"></script>
+</head>
+<body>
+<header class="top">
+  <h1>Writ playground</h1>
+  <p class="lede">The Writ policy kernel, compiled to WebAssembly, running in this tab. You play the agent, the approver and the tool: write a policy, send events, and see each verdict and the session state. Nothing leaves your browser.</p>
+  <p id="load-status" class="status" role="status" data-serve-hint="Serve this page: run node playground/build.mjs &amp;&amp; node playground/serve.mjs">Loading the kernel...</p>
+</header>
+
+<main class="grid">
+  <div class="col">
+    <section class="panel" aria-labelledby="policy-h">
+      <h2 id="policy-h">Policy</h2>
+      <label for="policy">Policy JSON</label>
+      <textarea id="policy" class="code" rows="16" spellcheck="false" autocapitalize="off" autocomplete="off"></textarea>
+      <div class="buttons">
+        <button id="check" type="button" class="primary" disabled>Check</button>
+        <button id="sample" type="button">Restore sample</button>
+      </div>
+      <div id="check-out" aria-live="polite"></div>
+    </section>
+
+    <section id="session-panel" class="panel" aria-labelledby="session-h" hidden>
+      <h2 id="session-h">Events</h2>
+
+      <fieldset>
+        <legend>Session</legend>
+        <div class="fields">
+          <label>Session id <input id="session-id" value="s1" autocomplete="off"></label>
+          <label>Permissions <input id="permissions" placeholder="comma separated" autocomplete="off"></label>
+        </div>
+        <p class="note">One approver, <code>user</code>, with role <code>user</code>.</p>
+        <div class="buttons">
+          <button type="button" data-event="session_start">Start session</button>
+          <button type="button" data-event="turn_start">Start turn</button>
+          <label class="check"><input id="user-initiated" type="checkbox" checked> user initiated</label>
+          <button type="button" data-event="step_start">Start step</button>
+          <button type="button" data-event="turn_end">End turn</button>
+          <button type="button" data-event="session_end">End session</button>
+          <button type="button" data-event="kill" class="danger">Kill</button>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Propose (the agent)</legend>
+        <div class="fields">
+          <label>Call id <input id="call-id" value="c1" autocomplete="off"></label>
+          <label>Tool <input id="tool" list="tools" value="send_email" autocomplete="off"></label>
+          <datalist id="tools"></datalist>
+        </div>
+        <label for="args">Arguments (JSON)</label>
+        <textarea id="args" class="code" rows="3" spellcheck="false">{"to": "ana@example.com", "subject": "Lunch on Friday?"}</textarea>
+        <div class="fields">
+          <label>Cost <input id="cost" value="25" inputmode="numeric" placeholder="none" autocomplete="off"></label>
+          <label>Currency <input id="currency" value="USD" autocomplete="off"></label>
+          <label>Guards that hold <input id="guards" placeholder="comma separated" autocomplete="off"></label>
+          <label>Escalators that fired <input id="escalators" placeholder="comma separated" autocomplete="off"></label>
+        </div>
+        <div class="buttons">
+          <button type="button" data-event="propose" class="primary">Propose</button>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Act on a call (the approver and the tool)</legend>
+        <div class="fields">
+          <label>Call <select id="call-select"><option value="">no calls yet</option></select></label>
+        </div>
+        <div class="buttons">
+          <button type="button" data-event="approve">Approve</button>
+          <button type="button" data-event="reject">Reject</button>
+          <button type="button" data-event="cancel">Cancel</button>
+        </div>
+        <label for="dispatch-args">Dispatch with other arguments (JSON, blank for the approved call)</label>
+        <textarea id="dispatch-args" class="code" rows="2" spellcheck="false" placeholder="blank: dispatch the digest the kernel holds"></textarea>
+        <div class="buttons">
+          <button type="button" data-event="dispatch" class="primary">Dispatch</button>
+        </div>
+        <div class="fields">
+          <label>Outcome
+            <select id="outcome">
+              <option value="succeeded">succeeded</option>
+              <option value="failed">failed</option>
+              <option value="declined">declined</option>
+            </select>
+          </label>
+          <label>Actual cost <input id="actual-cost" placeholder="blank: as reserved" inputmode="numeric" autocomplete="off"></label>
+        </div>
+        <div class="buttons">
+          <button type="button" data-event="result">Report result</button>
+          <button type="button" data-event="outcome_unknown">Outcome unknown</button>
+          <button type="button" data-event="reconcile">Reconcile</button>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Raw event</legend>
+        <label for="raw">Event JSON (seq, time and state_version are filled in when left out)</label>
+        <textarea id="raw" class="code" rows="4" spellcheck="false">{"type": "propose", "call_id": "c9", "tool": "wire_money", "call_digest": "d-wire", "guards": {}, "escalators": {}}</textarea>
+        <div class="buttons">
+          <button id="send-raw" type="button">Send</button>
+        </div>
+      </fieldset>
+    </section>
+
+    <section class="panel" aria-labelledby="scenario-h">
+      <h2 id="scenario-h">Scenarios</h2>
+      <p class="note">Traces from <code>corpus/examples</code>, played event by event exactly as written. Each step is checked against the trace's <code>expect</code>.</p>
+      <div class="fields">
+        <label>Scenario <select id="scenario-select" disabled><option value="">loading...</option></select></label>
+      </div>
+      <div class="buttons">
+        <button id="scenario-load" type="button" disabled>Load</button>
+        <button id="scenario-step" type="button" disabled>Step</button>
+        <button id="scenario-run" type="button" disabled>Run to end</button>
+      </div>
+      <p id="scenario-desc" class="note"></p>
+      <ol id="scenario-steps" class="steps"></ol>
+    </section>
+  </div>
+
+  <div class="col">
+    <section class="panel" aria-labelledby="verdict-h">
+      <h2 id="verdict-h">Verdict</h2>
+      <div id="verdict-out" aria-live="polite">
+        <p class="note">Check a policy and send an event, or load a scenario.</p>
+      </div>
+      <details>
+        <summary>Event sent</summary>
+        <pre id="event-json" class="code"></pre>
+      </details>
+      <details>
+        <summary>Verdict JSON</summary>
+        <pre id="verdict-json" class="code"></pre>
+      </details>
+    </section>
+
+    <section class="panel" aria-labelledby="state-h">
+      <h2 id="state-h">State</h2>
+      <div id="state-out"><p class="note">No session yet.</p></div>
+    </section>
+
+    <section class="panel" aria-labelledby="history-h">
+      <h2 id="history-h">History</h2>
+      <ol id="history" class="steps"></ol>
+    </section>
+  </div>
+</main>
+</body>
+</html>

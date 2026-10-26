@@ -1,0 +1,8 @@
+{"type":"session_start","seq":1,"time":0,"state_version":0,"session_id":"s1","requester":"u1","permissions":[],"approvers":{"dev":{"principal":"u1","kind":"human","roles":["owner"]}},"ledger":{}}
+{"type":"turn_start","seq":2,"time":10,"state_version":1,"user_initiated":true}
+{"type":"step_start","seq":3,"time":20,"state_version":2}
+{"type":"grant_create","seq":4,"time":20,"state_version":3,"grant_id":"g1","approver":"dev","tool":"shell.run","scope":"session","max_uses":20,"expires_at":3600000,"reviewed_scope_digest":"scope-any-shell"}
+{"type":"propose","seq":5,"time":30,"state_version":4,"call_id":"c1","tool":"shell.run","call_digest":"d-npm-install","guards":{},"escalators":{"not_allowlisted":true,"dangerous":false}}
+{"type":"propose","seq":6,"time":30,"state_version":5,"call_id":"c2","tool":"shell.run","call_digest":"d-rm-rf-home","guards":{},"escalators":{"not_allowlisted":true,"dangerous":true}}
+{"type":"dispatch","seq":7,"time":40,"state_version":6,"call_id":"c1","attempt":1,"call_digest":"d-npm-install","guards":{},"idempotency_key":"k-s1-c1"}
+{"type":"result","seq":8,"time":50,"state_version":7,"call_id":"c1","outcome":"succeeded"}

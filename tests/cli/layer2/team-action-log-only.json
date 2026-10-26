@@ -1,0 +1,10 @@
+{
+  "writ": "0.1",
+  "extends": ["quorum-org.json"],
+  "approver_roles": ["dba"],
+  "limits": { "approval_ttl_ms": 600000 },
+  "actions": {
+    "db.drop": { "consent": { "quorum": 2, "roles": ["dba"] }, "mode": "log_only" },
+    "notes.read": { "mode": "log_only" }
+  }
+}

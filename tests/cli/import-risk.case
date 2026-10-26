@@ -1,0 +1,4 @@
+args: import mcp tests/cli/import/risk.json --preset-dir ../../../schema/presets --out @TMP@/risk-draft.json
+exit: 0
+outfile: @TMP@/risk-draft.json tests/cli/import/risk-draft.json
+errfile: tests/cli/import-risk.err

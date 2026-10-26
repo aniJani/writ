@@ -1,0 +1,5 @@
+météo.prévoir: source.annotations leaves out cost: cost is 0.25, which a policy cannot hold (integers within plus or minus (2^53 - 1) only)
+météo.prévoir: source.annotations leaves out window: window.max is 100000000000000000000, which a policy cannot hold (integers within plus or minus (2^53 - 1) only)
+météo.prévoir: source.annotations leaves out steps: steps[1] is 2.5, which a policy cannot hold (integers within plus or minus (2^53 - 1) only)
+météo.prévoir: the server says readOnlyHint "yes"; read_only left "false" (lower it after review)
+weird: annotations is not an object, so source.annotations is left out
