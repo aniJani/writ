@@ -6,12 +6,12 @@ The distribution is `writ-kernel` and the import package is `writ`. It mirrors t
 
 ## Install
 
-The package is not on PyPI yet; the release workflow publishes it from the first tagged release. Until then, build it from the repository:
+The package is not on PyPI yet: the release workflow builds and tests it, and a later release publishes it. Until then, build it from the repository:
 
 1. Build the WebAssembly from the repository root: `scripts/build-wasm.sh` (it needs `emcc` 6.0.12 and the Lean toolchain; `build/wasm/README.md` has the details). It writes `src/writ/wasm/writ.wasm`, a standalone module for wasmtime, and stamps it with `writ.source` once its smoke test passes.
 2. Build the wheel and the sdist in `packages/writ-py`: `uv build`. Both carry `writ.wasm`, so installing the wheel needs no emcc, no Lean and no network beyond the `wasmtime` wheel. Without `writ.wasm` the build fails (`hatch_build.py`) rather than make a package with no kernel.
 
-Python 3.10 or later is required. The version is the CLI's in PEP 440 form: `0.1.0-preview.1` is written `0.1.0a1`.
+Python 3.10 or later is required. The version is the CLI's in PEP 440 form: `0.2.0-preview.1` is written `0.2.0a1`.
 
 ## Quick start
 

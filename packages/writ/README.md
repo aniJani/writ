@@ -7,10 +7,10 @@ This page is enough to use the package. For depth, the repository has the spec (
 ## Install
 
 ```sh
-npm install @anijani/writ
+npm install @anijani/writ@preview
 ```
 
-Until the package is published on npm, build it from the repository instead, then use it there or install the tarball elsewhere:
+Previews are published under the `preview` dist-tag. To build it from the repository instead, then use it there or install the tarball elsewhere:
 
 1. Build the WebAssembly from the repository root: `scripts/build-wasm.sh`. It needs `emcc` 6.0.12, the Lean toolchain from `lean-toolchain`, node, git with sparse-checkout, network access to github.com, and a path without spaces. `build/wasm/README.md` in the repository has the details.
 2. Build the package:
@@ -24,13 +24,13 @@ npm run build
 3. To use it in another project, pack it and install the tarball. The tarball carries the compiled code and the kernel (`wasm/writ.wasm` and `wasm/writ.mjs`); `scripts/pack-check.sh` in the repository checks its file list and installs it into an empty project.
 
 ```sh
-npm pack                     # in packages/writ, after npm run build; writes anijani-writ-0.1.0-preview.1.tgz
-cd /path/to/my-agent && npm install /path/to/writ/packages/writ/anijani-writ-0.1.0-preview.1.tgz
+npm pack                     # in packages/writ, after npm run build; writes anijani-writ-0.2.0-preview.1.tgz
+cd /path/to/my-agent && npm install /path/to/writ/packages/writ/anijani-writ-0.2.0-preview.1.tgz
 ```
 
 Node 20 or later is required. `npm test` stops with a message if `wasm/writ.mjs` or `wasm/writ.wasm` is missing. In the repository it also stops when `wasm/writ.source`, the hash of the kernel sources the build wrote, does not match the current tree, so a stale build is never tested.
 
-Size and speed, measured on 2026-10-25 on an arm64 Mac with Node 26: `writ.wasm` is 2,215,471 bytes raw and 392,943 bytes gzipped (the build is deterministic and fails above 3 MB). The npm tarball, measured by `scripts/pack-check.sh` on 2026-10-25 with Node 26, is 510,292 bytes (2,640,996 bytes unpacked; the packed size varies a little with the zlib of the Node that packs it). A kernel step takes about 0.2 ms for a small state, including parsing the policy and the state, and the time grows linearly with the size of the state; see [Limits](#limits).
+Size and speed, measured on 2026-10-25 on an arm64 Mac with Node 26: `writ.wasm` is 2,215,471 bytes raw and 392,943 bytes gzipped (the build is deterministic and fails above 3 MB). The npm tarball, measured by `scripts/pack-check.sh` on 2026-11-10 with Node 26, is 510,314 bytes (2,641,033 bytes unpacked; the packed size varies a little with the zlib of the Node that packs it). A kernel step takes about 0.2 ms for a small state, including parsing the policy and the state, and the time grows linearly with the size of the state; see [Limits](#limits).
 
 ## Quick start
 

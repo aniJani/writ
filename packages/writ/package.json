@@ -1,6 +1,6 @@
 {
   "name": "@anijani/writ",
-  "version": "0.1.0-preview.1",
+  "version": "0.2.0-preview.1",
   "description": "Typed wrapper around the Writ policy kernel compiled to WebAssembly",
   "keywords": ["agent", "ai-agent", "policy", "approval", "authorization", "tool-calling", "ai-sdk", "lean", "webassembly"],
   "license": "Apache-2.0",

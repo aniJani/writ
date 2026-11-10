@@ -10,6 +10,7 @@ build/corpus/
 build/tar/
 build/writ-corpus-*.tar.gz
 build/release/out/
+build/release/python/
 build/release/state/
 build/release/logs/
 __pycache__/

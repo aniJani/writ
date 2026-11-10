@@ -170,7 +170,8 @@ jobs:
 
       - run: scripts/py-test.sh
       - run: scripts/release-build.sh npm dist
-      - run: scripts/release-build.sh python dist
+      # This release does not publish writ-kernel: its packages are built and checked, not uploaded.
+      - run: scripts/release-build.sh python python-dist
 
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
@@ -209,7 +210,7 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 30
     # The owner configures this environment to require a reviewer's approval, to admit only v* tags,
-    # and to hold the NPM_TOKEN secret; PyPI trusts it as the project's trusted publisher.
+    # and to hold the NPM_TOKEN secret.
     environment: release
     permissions:
       contents: write
@@ -230,13 +231,9 @@ jobs:
           TAG: ${{ github.ref_name }}
         run: |
           version=${TAG#v}
-          case "$version" in
-            *-preview.*) pep440=${version%-preview.*}a${version##*-preview.} ;;
-            *) pep440=$version ;;
-          esac
           want=$(printf '%s\n' "anijani-writ-$version.tgz" "writ-$version-linux-arm64.tar.gz" \
             "writ-$version-linux-x64.tar.gz" "writ-$version-macos-arm64.tar.gz" "writ-corpus-$version.tar.gz" \
-            "writ_kernel-$pep440-py3-none-any.whl" "writ_kernel-$pep440.tar.gz" | LC_ALL=C sort)
+            | LC_ALL=C sort)
           got=$(cd dist && find . -type f | sed 's|^\./||' | LC_ALL=C sort)
           if [ "$want" != "$got" ]; then
             echo "expected these assets:"; echo "$want"; echo "got:"; echo "$got"
@@ -245,8 +242,8 @@ jobs:
           scripts/release-build.sh sums dist
           cat dist/SHA256SUMS
 
-      # The release stays a draft until npm and PyPI have the packages, and every step can run again:
-      # a re-run finds the draft, the npm version and the PyPI files already there and goes on.
+      # The release stays a draft until npm has the package, and every step can run again: a re-run
+      # finds the draft and the npm version already there and goes on.
       - name: Create the GitHub release as a draft
         env:
           GH_TOKEN: ${{ github.token }}
@@ -299,16 +296,6 @@ jobs:
           dist_tag=latest
           case "$version" in *-preview.*) dist_tag=preview ;; esac
           npm publish "dist/anijani-writ-$version.tgz" --tag "$dist_tag" --provenance --access public
-
-      - name: Stage the Python packages
-        run: |
-          mkdir pypi-dist
-          cp dist/writ_kernel-* pypi-dist/
-
-      - uses: pypa/gh-action-pypi-publish@7245906fb61fa33a13554f9d5fb856fe61758086 # v1.14.3
-        with:
-          packages-dir: pypi-dist/
-          skip-existing: true
 
       - name: Publish the GitHub release
         env:

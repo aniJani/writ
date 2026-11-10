@@ -11,8 +11,10 @@
 #             in the corpus step)
 #   wasm, npm-suites, py-test   scripts/build-wasm.sh, npm test in packages/writ, examples/langgraph,
 #             examples/ai-sdk and playground, and scripts/py-test.sh
-#   binary, npm, python, corpus   the assets: the host's binary tarball, the npm tarball after a dry
-#             run of the npm publish, the Python wheel and sdist, and the corpus tarball
+#   binary, npm, corpus   the assets: the host's binary tarball, the npm tarball after a dry run of
+#             the npm publish, and the corpus tarball
+#   python    the Python wheel and sdist, built and checked into build/release/python/; this release
+#             does not publish them, so they are not assets
 #   linux-*   with --linux only: in a linux/arm64 Ubuntu 24.04 container (build/release/Dockerfile),
 #             lake build, the CLI cases, the proof checks, both fuzz runs and scripts/corpus.sh,
 #             which checks the corpus manifest's sha256s on Linux, then the linux-arm64 tarball
@@ -36,6 +38,7 @@ ACTIONLINT_IMAGE=rhysd/actionlint@sha256:b1934ee5f1c509618f2508e6eb47ee0d3520686
 LINUX_IMAGE=writ-release-linux
 LINUX_CONTAINER=writ-release-linux
 OUT=build/release/out
+PYOUT=build/release/python
 STATE=build/release/state
 LOGS=build/release/logs
 
@@ -74,9 +77,9 @@ sources() {
 SRC=$({ sources | xargs -0 "${SHA[@]}"; git log -1 --format=%ct; } | "${SHA[@]}" | cut -d' ' -f1)
 
 if [ "$fresh" = 1 ] || [ "$(cat "$STATE/source" 2>/dev/null || true)" != "$SRC" ]; then
-  rm -rf "$OUT" "$STATE" "$LOGS"
+  rm -rf "$OUT" "$PYOUT" "$STATE" "$LOGS"
 fi
-mkdir -p "$OUT" "$STATE" "$LOGS"
+mkdir -p "$OUT" "$PYOUT" "$STATE" "$LOGS"
 echo "$SRC" > "$STATE/source"
 START=$(date +%s)
 echo "release dry run of $version (PEP 440 $pep440), source $SRC"
@@ -200,8 +203,7 @@ linux_run() {
 }
 
 check_assets() {
-  want=("writ-$version-$target.tar.gz" "anijani-writ-$version.tgz" "writ_kernel-$pep440-py3-none-any.whl"
-    "writ_kernel-$pep440.tar.gz" "writ-corpus-$version.tar.gz")
+  want=("writ-$version-$target.tar.gz" "anijani-writ-$version.tgz" "writ-corpus-$version.tar.gz")
   [ "$linux" = 0 ] || want+=("writ-$version-linux-arm64.tar.gz")
   for f in "${want[@]}"; do
     [ -f "$OUT/$f" ] || { echo "$OUT/$f is missing"; return 1; }
@@ -227,7 +229,7 @@ step npm-suites npm_suites
 step py-test scripts/py-test.sh
 step binary scripts/release-build.sh binary "$OUT"
 step npm scripts/release-build.sh npm "$OUT"
-step python scripts/release-build.sh python "$OUT"
+step python scripts/release-build.sh python "$PYOUT"
 step corpus scripts/release-build.sh corpus "$OUT"
 if [ "$linux" = 1 ]; then
   echo "== linux: building and testing in a linux/arm64 container"

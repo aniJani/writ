@@ -1,5 +1,5 @@
 name = "writ"
-version = "0.1.0-preview.1"
+version = "0.2.0-preview.1"
 defaultTargets = ["Writ", "WritSpec", "WritTests", "WritCli", "WritProofs", "writ"]
 
 [[lean_lib]]
