@@ -7,7 +7,7 @@
   "engines": { "node": ">=22" },
   "scripts": {
     "pretest": "node ../../packages/writ/scripts/check-wasm.mjs",
-    "test": "node --test test/"
+    "test": "node --test test/*.test.mjs"
   },
   "dependencies": {
     "@anijani/writ": "file:../../packages/writ",
