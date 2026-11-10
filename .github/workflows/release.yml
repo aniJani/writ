@@ -283,6 +283,7 @@ jobs:
           package-manager-cache: false
 
       # A preview goes to the `preview` dist-tag, so `npm install @anijani/writ` never picks it.
+      # The tarball path starts with ./ because npm reads `dist/<file>` as a GitHub repository.
       - name: Publish to npm
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
@@ -295,7 +296,7 @@ jobs:
           fi
           dist_tag=latest
           case "$version" in *-preview.*) dist_tag=preview ;; esac
-          npm publish "dist/anijani-writ-$version.tgz" --tag "$dist_tag" --provenance --access public
+          npm publish "./dist/anijani-writ-$version.tgz" --tag "$dist_tag" --provenance --access public
 
       - name: Publish the GitHub release
         env:
